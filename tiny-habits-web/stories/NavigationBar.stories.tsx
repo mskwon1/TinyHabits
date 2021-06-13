@@ -2,10 +2,7 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import '../styles/globals.css';
 
-import {
-  NavigationBar,
-  NavigationBarProps,
-} from '../components/layout/NavigationBar';
+import { NavigationBar } from '../components/layout/NavigationBar';
 
 export default {
   title: 'Global Navigation Bar',
@@ -15,16 +12,6 @@ export default {
   },
 } as Meta;
 
-const Template: Story<NavigationBarProps> = (args) => (
-  <NavigationBar {...args} />
-);
+const Template: Story = (args) => <NavigationBar {...args} />;
 
-export const LoggedIn = Template.bind({});
-LoggedIn.args = {
-  isLoggedIn: true,
-};
-
-export const LoggedOut = Template.bind({});
-LoggedOut.args = {
-  isLoggedIn: false,
-};
+export const Default = Template.bind({});
