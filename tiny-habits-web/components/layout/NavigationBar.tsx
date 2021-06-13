@@ -6,6 +6,7 @@ export interface NavigationBarProps {
 
 export function NavigationBar(props: NavigationBarProps): JSX.Element {
   const { isLoggedIn } = props;
+
   return (
     <AppBar>
       <Toolbar className="flex">

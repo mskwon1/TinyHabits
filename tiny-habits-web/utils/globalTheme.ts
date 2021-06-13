@@ -6,11 +6,11 @@ export const theme: Theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#4db6ac',
+      main: '#78909c',
       contrastText: '#fafafa',
     },
     secondary: {
-      main: '#6200ea',
+      main: '#e0e0e0',
     },
   },
   spacing: (factor) => `${0.25 * factor}rem`,
