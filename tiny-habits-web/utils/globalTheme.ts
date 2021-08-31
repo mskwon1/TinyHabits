@@ -7,10 +7,9 @@ export const theme: Theme = createMuiTheme({
   palette: {
     primary: {
       main: '#78909c',
-      contrastText: '#fafafa',
     },
     secondary: {
-      main: '#e0e0e0',
+      main: '#ffffff',
     },
   },
   spacing: (factor) => `${0.25 * factor}rem`,
