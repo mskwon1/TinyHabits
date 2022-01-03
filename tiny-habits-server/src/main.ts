@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
@@ -7,6 +8,9 @@ async function bootstrap() {
     AppModule,
   );
 
-  await expressApp.listen(3000);
+  const configService = expressApp.get(ConfigService);
+  const port = +configService.get('PORT') || 3005;
+
+  await expressApp.listen(port);
 }
 bootstrap();
