@@ -15,6 +15,6 @@ export class TestController {
 
   @Get()
   test() {
-    return this.testService.test();
+    return this.testService.test(false);
   }
 }
