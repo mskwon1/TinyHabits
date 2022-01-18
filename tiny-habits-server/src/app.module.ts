@@ -5,6 +5,8 @@ import { ApiModule } from './api/api.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -15,6 +17,18 @@ import { getConnectionOptions } from 'typeorm';
         Object.assign(await getConnectionOptions(), {
           autoLoadEntitities: true,
         }),
+    }),
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+          sortSchema: true,
+          playground: configService.get('APP_ENV') !== 'production',
+          debug: configService.get('APP_ENV') !== 'production',
+        };
+      },
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
