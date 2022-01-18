@@ -18,9 +18,17 @@ import { join } from 'path';
           autoLoadEntitities: true,
         }),
     }),
-    GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+          sortSchema: true,
+          playground: configService.get('APP_ENV') !== 'production',
+          debug: configService.get('APP_ENV') !== 'production',
+        };
+      },
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
