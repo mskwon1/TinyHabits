@@ -9,8 +9,11 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async create() {
-    // TODO : implement
+  async create(params: CreateUserParams): Promise<User> {
+    const user = this.userRepository.create(params);
+    const createdUser = await this.userRepository.save(user);
+
+    return createdUser;
   }
 
   async findAll(): Promise<User[]> {
@@ -21,8 +24,16 @@ export class UserService {
     return this.userRepository.findOne(userId);
   }
 
-  async update() {
-    // TODO : implement
+  async update(
+    userId: number,
+    updateUserParams: UpdateUserParams,
+  ): Promise<User> {
+    const updatedUser = await this.userRepository.save({
+      id: userId,
+      ...updateUserParams,
+    });
+
+    return updatedUser;
   }
 
   async delete(userId: number): Promise<void> {
