@@ -51,6 +51,8 @@ describe('UserService', () => {
   });
 
   describe('CRUD', () => {
+    it.todo('create should return created user');
+
     it('findAll should return all users', async () => {
       const resultUsers = await userService.findAll();
 
@@ -65,6 +67,8 @@ describe('UserService', () => {
       expect(resultUser).toBeDefined();
       expect(resultUser.id).toBe(testUserId);
     });
+
+    it.todo('update should return updated user');
 
     it('remove should return without error', async () => {
       const testUserId = 1;
