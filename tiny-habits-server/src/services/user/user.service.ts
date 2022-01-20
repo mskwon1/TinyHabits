@@ -25,7 +25,7 @@ export class UserService {
     // TODO : implement
   }
 
-  async remove(userId: number): Promise<void> {
+  async delete(userId: number): Promise<void> {
     await this.userRepository.delete(userId);
   }
 }
