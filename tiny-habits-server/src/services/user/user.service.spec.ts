@@ -30,6 +30,7 @@ const mockUsers: User[] = [
 
 const mockUserRepository = {
   create: jest.fn(),
+  save: jest.fn(),
   findOne: jest.fn(async (userId: number) => _.find(mockUsers, ['id', userId])),
   find: jest.fn(async () => mockUsers),
   update: jest.fn(),
@@ -51,7 +52,14 @@ describe('UserService', () => {
   });
 
   describe('CRUD', () => {
-    it.todo('create should return created user');
+    it('create should not throw', async () => {
+      expect(
+        userService.create({
+          name: '권민수4',
+          email: 'minsu4@publy.co',
+        }),
+      ).resolves.not.toThrow();
+    });
 
     it('findAll should return all users', async () => {
       const resultUsers = await userService.findAll();
@@ -68,9 +76,14 @@ describe('UserService', () => {
       expect(resultUser.id).toBe(testUserId);
     });
 
-    it.todo('update should return updated user');
+    it('update should not thorw', async () => {
+      const targetUserId = 1;
+      expect(
+        userService.update(targetUserId, { name: '민수권' }),
+      ).resolves.not.toThrow();
+    });
 
-    it('remove should return without error', async () => {
+    it('remove should not throw', async () => {
       const testUserId = 1;
 
       await expect(userService.delete(testUserId)).resolves.not.toThrow();
