@@ -53,13 +53,36 @@ describe('UserService', () => {
   });
 
   describe('Create', () => {
-    it('create should not throw', async () => {
-      expect(
-        userService.create({
-          name: '권민수4',
-          email: 'minsu4@publy.co',
-        }),
-      ).resolves.not.toThrow();
+    it('should return created user if params are valid', async () => {
+      const createUserDto: CreateUserParams = {
+        email: faker.internet.email(),
+        name: faker.name.findName(),
+      };
+
+      const createdUser: Partial<User> = {
+        ...createUserDto,
+      };
+
+      const savedUser: User = {
+        id: faker.datatype.number(),
+        ...createUserDto,
+        createdAt: faker.date.past().toISOString(),
+        updatedAt: faker.date.past().toISOString(),
+      };
+
+      const userRepositoryCreateSpy = jest
+        .spyOn(mockUserRepository, 'create')
+        .mockReturnValue(createdUser);
+
+      const userRepositorySaveSpy = jest
+        .spyOn(mockUserRepository, 'save')
+        .mockResolvedValue(savedUser);
+
+      const result = await userService.create(createUserDto);
+
+      expect(userRepositoryCreateSpy).toHaveBeenCalledWith(createUserDto);
+      expect(userRepositorySaveSpy).toHaveBeenCalledWith(createdUser);
+      expect(result).toEqual(savedUser);
     });
   });
 
