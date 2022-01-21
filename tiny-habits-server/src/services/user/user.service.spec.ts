@@ -5,37 +5,23 @@ import { UserService } from './user.service';
 import * as _ from 'lodash';
 import * as faker from '@faker-js/faker';
 
-const mockUsers: User[] = [
-  {
-    id: 1,
-    email: 'minsu1@publy.co',
-    name: '권민수',
-    createdAt: '2022-01-19 00:00:00',
-    updatedAt: '2022-01-19 00:00:00',
-  },
-  {
-    id: 2,
-    email: 'minsu2@publy.co',
-    name: '권민수2',
-    createdAt: '2022-01-20 00:00:00',
-    updatedAt: '2022-01-20 00:00:00',
-  },
-  {
-    id: 3,
-    email: 'minsu3@publy.co',
-    name: '권민수3',
-    createdAt: '2022-01-21 00:00:00',
-    updatedAt: '2022-01-21 00:00:00',
-  },
-];
-
 const mockUserRepository = {
   create: jest.fn(),
   save: jest.fn(),
-  findOne: jest.fn(async (userId: number) => _.find(mockUsers, ['id', userId])),
-  find: jest.fn(async () => mockUsers),
+  findOne: jest.fn(),
+  find: jest.fn(),
   update: jest.fn(),
   delete: jest.fn(),
+};
+
+const createMockUser = (userId: number): User => {
+  return {
+    id: userId,
+    email: faker.internet.email(),
+    name: faker.name.findName(),
+    createdAt: faker.date.past().toISOString(),
+    updatedAt: faker.date.past().toISOString(),
+  };
 };
 
 describe('UserService', () => {
@@ -80,26 +66,38 @@ describe('UserService', () => {
 
       const result = await userService.create(createUserDto);
 
-      expect(userRepositoryCreateSpy).toHaveBeenCalledWith(createUserDto);
-      expect(userRepositorySaveSpy).toHaveBeenCalledWith(createdUser);
+      expect(userRepositoryCreateSpy).toBeCalledWith(createUserDto);
+      expect(userRepositorySaveSpy).toBeCalledWith(createdUser);
       expect(result).toEqual(savedUser);
     });
   });
 
   describe('Retrieve', () => {
     it('findAll should return all users', async () => {
+      const savedUsers = _.map(_.range(1, 3), createMockUser);
+
+      const userRepositoryFindSpy = jest
+        .spyOn(mockUserRepository, 'find')
+        .mockResolvedValue(savedUsers);
+
       const resultUsers = await userService.findAll();
 
-      expect(resultUsers).toBeDefined();
-      expect(Array.isArray(resultUsers)).toBe(true);
+      expect(userRepositoryFindSpy).toBeCalled();
+      expect(resultUsers).toEqual(savedUsers);
     });
 
     it('findOne should return corresponding user', async () => {
-      const testUserId = 1;
+      const testUserId = faker.datatype.number();
+      const savedUser = createMockUser(testUserId);
+
+      const userRepositoryFindOneSpy = jest
+        .spyOn(mockUserRepository, 'findOne')
+        .mockResolvedValue(savedUser);
+
       const resultUser = await userService.findOne(testUserId);
 
-      expect(resultUser).toBeDefined();
-      expect(resultUser.id).toBe(testUserId);
+      expect(userRepositoryFindOneSpy).toBeCalledWith(testUserId);
+      expect(resultUser).toEqual(savedUser);
     });
   });
 
