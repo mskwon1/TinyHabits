@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '@src/models/users/user.entity';
 import { UserService } from './user.service';
 import * as _ from 'lodash';
+import * as faker from '@faker-js/faker';
 
 const mockUsers: User[] = [
   {
@@ -40,7 +41,7 @@ const mockUserRepository = {
 describe('UserService', () => {
   let userService: UserService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         UserService,
@@ -51,7 +52,7 @@ describe('UserService', () => {
     userService = moduleRef.get<UserService>(UserService);
   });
 
-  describe('CRUD', () => {
+  describe('Create', () => {
     it('create should not throw', async () => {
       expect(
         userService.create({
@@ -60,7 +61,9 @@ describe('UserService', () => {
         }),
       ).resolves.not.toThrow();
     });
+  });
 
+  describe('Retrieve', () => {
     it('findAll should return all users', async () => {
       const resultUsers = await userService.findAll();
 
@@ -75,14 +78,18 @@ describe('UserService', () => {
       expect(resultUser).toBeDefined();
       expect(resultUser.id).toBe(testUserId);
     });
+  });
 
+  describe('Update', () => {
     it('update should not thorw', async () => {
       const targetUserId = 1;
       expect(
         userService.update(targetUserId, { name: '민수권' }),
       ).resolves.not.toThrow();
     });
+  });
 
+  describe('Delete', () => {
     it('remove should not throw', async () => {
       const testUserId = 1;
 
