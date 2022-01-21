@@ -102,11 +102,29 @@ describe('UserService', () => {
   });
 
   describe('Update', () => {
-    it('update should not thorw', async () => {
-      const targetUserId = 1;
-      expect(
-        userService.update(targetUserId, { name: '민수권' }),
-      ).resolves.not.toThrow();
+    it('should return updated user', async () => {
+      const testUserId = faker.datatype.number();
+      const originalUser = createMockUser(testUserId);
+
+      const newUserName = faker.name.findName();
+      const updateUserDto: UpdateUserParams = { name: newUserName };
+
+      const updatedUser: User = {
+        ...originalUser,
+        ...updateUserDto,
+      };
+
+      const userRepositorySaveSpy = jest
+        .spyOn(mockUserRepository, 'save')
+        .mockResolvedValue(updatedUser);
+
+      const result = await userService.update(testUserId, updateUserDto);
+
+      expect(userRepositorySaveSpy).toBeCalledWith({
+        id: testUserId,
+        ...updateUserDto,
+      });
+      expect(result).toEqual(updatedUser);
     });
   });
 
