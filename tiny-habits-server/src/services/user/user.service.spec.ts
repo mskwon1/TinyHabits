@@ -130,9 +130,16 @@ describe('UserService', () => {
 
   describe('Delete', () => {
     it('remove should not throw', async () => {
-      const testUserId = 1;
+      const testUserId = faker.datatype.number();
 
-      await expect(userService.delete(testUserId)).resolves.not.toThrow();
+      const userRepositoryDeleteSpy = jest
+        .spyOn(mockUserRepository, 'delete')
+        .mockImplementationOnce(() => Promise.resolve());
+
+      const result = await userService.delete(testUserId);
+      console.log(result);
+      expect(userRepositoryDeleteSpy).toBeCalledWith(testUserId);
+      expect(result).toBeDefined();
     });
   });
 });
