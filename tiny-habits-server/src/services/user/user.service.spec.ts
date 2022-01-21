@@ -137,7 +137,7 @@ describe('UserService', () => {
         .mockImplementationOnce(() => Promise.resolve());
 
       const result = await userService.delete(testUserId);
-      console.log(result);
+      
       expect(userRepositoryDeleteSpy).toBeCalledWith(testUserId);
       expect(result).toBeDefined();
     });
