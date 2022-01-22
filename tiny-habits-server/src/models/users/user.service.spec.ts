@@ -114,16 +114,15 @@ describe('UserService', () => {
         ...updateUserDto,
       };
 
-      const userRepositorySaveSpy = jest
-        .spyOn(mockUserRepository, 'save')
+      const userRepositoryUpdateSpy = jest.spyOn(mockUserRepository, 'update');
+      const userRepositoryFindOneSpy = jest
+        .spyOn(mockUserRepository, 'findOne')
         .mockResolvedValue(updatedUser);
 
       const result = await userService.update(testUserId, updateUserDto);
 
-      expect(userRepositorySaveSpy).toBeCalledWith({
-        id: testUserId,
-        ...updateUserDto,
-      });
+      expect(userRepositoryUpdateSpy).toBeCalledWith(testUserId, updateUserDto);
+      expect(userRepositoryFindOneSpy).toBeCalledWith(testUserId);
       expect(result).toEqual(updatedUser);
     });
   });
@@ -137,9 +136,8 @@ describe('UserService', () => {
         .mockImplementationOnce(() => Promise.resolve());
 
       const result = await userService.delete(testUserId);
-      
+
       expect(userRepositoryDeleteSpy).toBeCalledWith(testUserId);
-      expect(result).toBeDefined();
     });
   });
 });

@@ -28,10 +28,10 @@ export class UserService {
     userId: number,
     updateUserParams: UpdateUserParams,
   ): Promise<User> {
-    const updatedUser = await this.userRepository.save({
-      id: userId,
-      ...updateUserParams,
-    });
+    const { name } = updateUserParams;
+
+    await this.userRepository.update(userId, { name });
+    const updatedUser = this.userRepository.findOne(userId);
 
     return updatedUser;
   }
