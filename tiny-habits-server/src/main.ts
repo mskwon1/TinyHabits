@@ -14,7 +14,12 @@ async function bootstrap() {
   const configService = expressApp.get(ConfigService);
   const port = +configService.get('PORT') || DEFAULT_PORT_NUMBER;
 
-  expressApp.useGlobalPipes(new ValidationPipe());
+  expressApp.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  );
 
   await expressApp.listen(port);
 }
