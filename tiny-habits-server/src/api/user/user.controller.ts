@@ -9,8 +9,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post('/')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = await this.userService.create(createUserDto);
-    return createdUser;
+    return await this.userService.create(createUserDto);
   }
 
   @Put('/:userId')
@@ -18,8 +17,7 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
     @Param('userId') userId: number,
   ): Promise<User> {
-    const updatedUser = await this.userService.update(userId, updateUserDto);
-    return updatedUser;
+    return await this.userService.update(userId, updateUserDto);
   }
 
   @Delete('/:userId')
