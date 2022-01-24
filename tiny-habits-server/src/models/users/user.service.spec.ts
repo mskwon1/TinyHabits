@@ -116,6 +116,14 @@ describe('UserService', () => {
       });
       expect(resultUser).toEqual(savedUser);
     });
+
+    it.todo(
+      'findOneByEmail with inlcudePassword parameter as false should not return password',
+    );
+
+    it.todo(
+      'findOneByEmail with inlcudePassword parameter as true should also return password',
+    );
   });
 
   describe('Update', () => {
