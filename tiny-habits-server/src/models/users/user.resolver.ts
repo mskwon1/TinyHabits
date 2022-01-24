@@ -8,6 +8,6 @@ export class UserResolver {
 
   @Query((returns) => UserModel)
   async user(@Args('id', { type: () => Int }) userId: number) {
-    return this.userService.findOne(userId);
+    return this.userService.findOneById(userId);
   }
 }
