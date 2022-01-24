@@ -19,6 +19,7 @@ const createMockUser = (userId: number): User => {
     id: userId,
     email: faker.internet.email(),
     name: faker.name.findName(),
+    password: faker.internet.password(),
     createdAt: faker.date.past().toISOString(),
     updatedAt: faker.date.past().toISOString(),
   };
@@ -43,6 +44,7 @@ describe('UserService', () => {
       const createUserDto: CreateUserParams = {
         email: faker.internet.email(),
         name: faker.name.findName(),
+        password: faker.internet.password(),
       };
 
       const createdUser: Partial<User> = {
@@ -66,7 +68,6 @@ describe('UserService', () => {
 
       const result = await userService.create(createUserDto);
 
-      expect(userRepositoryCreateSpy).toBeCalledWith(createUserDto);
       expect(userRepositorySaveSpy).toBeCalledWith(createdUser);
       expect(result).toEqual(savedUser);
     });
