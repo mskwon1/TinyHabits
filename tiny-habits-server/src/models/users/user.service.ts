@@ -33,7 +33,15 @@ export class UserService {
     return this.userRepository.findOne(userId);
   }
 
-  async findOneByEmail(email: string): Promise<User> {
+  async findOneByEmail(email: string, includePassword = false): Promise<User> {
+    if (includePassword) {
+      return this.userRepository
+        .createQueryBuilder('user')
+        .where('user.email = :email', { email })
+        .addSelect('user.password')
+        .getOne();
+    }
+
     return this.userRepository.findOne({ email });
   }
 
