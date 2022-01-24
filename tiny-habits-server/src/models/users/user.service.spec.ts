@@ -87,7 +87,7 @@ describe('UserService', () => {
       expect(resultUsers).toEqual(savedUsers);
     });
 
-    it('findOne should return corresponding user', async () => {
+    it('findOneById should return corresponding user', async () => {
       const testUserId = faker.datatype.number();
       const savedUser = createMockUser(testUserId);
 
@@ -98,6 +98,22 @@ describe('UserService', () => {
       const resultUser = await userService.findOneById(testUserId);
 
       expect(userRepositoryFindOneSpy).toBeCalledWith(testUserId);
+      expect(resultUser).toEqual(savedUser);
+    });
+
+    it('findOneByEmail should return corresponding user', async () => {
+      const testUserId = faker.datatype.number();
+      const savedUser = createMockUser(testUserId);
+
+      const userRepositoryFindOneSpy = jest
+        .spyOn(mockUserRepository, 'findOne')
+        .mockResolvedValue(savedUser);
+
+      const resultUser = await userService.findOneByEmail(savedUser.email);
+
+      expect(userRepositoryFindOneSpy).toBeCalledWith({
+        email: savedUser.email,
+      });
       expect(resultUser).toEqual(savedUser);
     });
   });

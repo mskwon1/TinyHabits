@@ -33,6 +33,10 @@ export class UserService {
     return this.userRepository.findOne(userId);
   }
 
+  async findOneByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ email });
+  }
+
   async update(
     userId: number,
     updateUserParams: UpdateUserParams,
