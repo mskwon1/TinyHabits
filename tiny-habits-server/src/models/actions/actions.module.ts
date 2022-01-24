@@ -5,4 +5,4 @@ import { Action } from './action.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Action])],
 })
-export class UserModule {}
+export class ActionModule {}

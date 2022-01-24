@@ -5,4 +5,4 @@ import { Aspiration } from './aspiration.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Aspiration])],
 })
-export class UserModule {}
+export class AspirationModule {}
