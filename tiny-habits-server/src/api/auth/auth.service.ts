@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@src/models/users/user.entity';
 import { UserService } from '@src/models/users/user.service';
-import * as bcrypt from 'bcrypt';
 import _ from 'lodash';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
       return null;
     }
 
-    const loginResult = bcrypt.compare(password, user.password);
+    const loginResult = await bcrypt.compare(password, user.password);
 
     if (!loginResult) {
       return null;
