@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@src/models/users/user.entity';
+import * as bcrpyt from 'bcrypt';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -10,7 +11,15 @@ export class UserService {
   ) {}
 
   async create(params: CreateUserParams): Promise<User> {
-    const user = this.userRepository.create(params);
+    const { name, email, password } = params;
+
+    const hashedPassword = await bcrpyt.hash(password, 10);
+
+    const user = this.userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
     const createdUser = await this.userRepository.save(user);
 
     return createdUser;
@@ -20,8 +29,20 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOne(userId: number): Promise<User> {
+  async findOneById(userId: number): Promise<User> {
     return this.userRepository.findOne(userId);
+  }
+
+  async findOneByEmail(email: string, includePassword = false): Promise<User> {
+    if (includePassword) {
+      return this.userRepository
+        .createQueryBuilder('user')
+        .where('user.email = :email', { email })
+        .addSelect('user.password')
+        .getOne();
+    }
+
+    return this.userRepository.findOne({ email });
   }
 
   async update(

@@ -19,6 +19,7 @@ const createMockUser = (userId: number): User => {
     id: userId,
     email: faker.internet.email(),
     name: faker.name.findName(),
+    password: faker.internet.password(),
     createdAt: faker.date.past().toISOString(),
     updatedAt: faker.date.past().toISOString(),
   };
@@ -43,6 +44,7 @@ describe('UserService', () => {
       const createUserDto: CreateUserParams = {
         email: faker.internet.email(),
         name: faker.name.findName(),
+        password: faker.internet.password(),
       };
 
       const createdUser: Partial<User> = {
@@ -66,7 +68,6 @@ describe('UserService', () => {
 
       const result = await userService.create(createUserDto);
 
-      expect(userRepositoryCreateSpy).toBeCalledWith(createUserDto);
       expect(userRepositorySaveSpy).toBeCalledWith(createdUser);
       expect(result).toEqual(savedUser);
     });
@@ -86,7 +87,7 @@ describe('UserService', () => {
       expect(resultUsers).toEqual(savedUsers);
     });
 
-    it('findOne should return corresponding user', async () => {
+    it('findOneById should return corresponding user', async () => {
       const testUserId = faker.datatype.number();
       const savedUser = createMockUser(testUserId);
 
@@ -94,11 +95,35 @@ describe('UserService', () => {
         .spyOn(mockUserRepository, 'findOne')
         .mockResolvedValue(savedUser);
 
-      const resultUser = await userService.findOne(testUserId);
+      const resultUser = await userService.findOneById(testUserId);
 
       expect(userRepositoryFindOneSpy).toBeCalledWith(testUserId);
       expect(resultUser).toEqual(savedUser);
     });
+
+    it('findOneByEmail should return corresponding user', async () => {
+      const testUserId = faker.datatype.number();
+      const savedUser = createMockUser(testUserId);
+
+      const userRepositoryFindOneSpy = jest
+        .spyOn(mockUserRepository, 'findOne')
+        .mockResolvedValue(savedUser);
+
+      const resultUser = await userService.findOneByEmail(savedUser.email);
+
+      expect(userRepositoryFindOneSpy).toBeCalledWith({
+        email: savedUser.email,
+      });
+      expect(resultUser).toEqual(savedUser);
+    });
+
+    it.todo(
+      'findOneByEmail with inlcudePassword parameter as false should not return password',
+    );
+
+    it.todo(
+      'findOneByEmail with inlcudePassword parameter as true should also return password',
+    );
   });
 
   describe('Update', () => {
