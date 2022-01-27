@@ -1,4 +1,7 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Protected } from '@src/decorators/protected.decorator';
+import { AuthUser } from '@src/decorators/user.decorator';
+import { User } from '@src/models/users/user.entity';
 import { UserService } from '@src/models/users/user.service';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
@@ -23,5 +26,16 @@ export class AuthController {
       email,
       accessToken,
     };
+  }
+
+  @Protected()
+  @Get('/protected')
+  async protected(@AuthUser() user: User) {
+    return user;
+  }
+
+  @Get('/public')
+  async public(@Request() req) {
+    return 'this is public';
   }
 }
