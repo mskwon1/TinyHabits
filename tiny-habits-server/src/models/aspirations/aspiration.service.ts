@@ -27,8 +27,9 @@ export class AspirationService {
     return createdAspiration;
   }
 
-  async findAll(): Promise<Aspiration[]> {
-    return this.aspirationRepository.find();
+  async findAll(options: { userId?: number } = {}): Promise<Aspiration[]> {
+    const { userId } = options;
+    return this.aspirationRepository.find({ where: { userId } });
   }
 
   async findOneById(aspirationId: number): Promise<Aspiration> {
