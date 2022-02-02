@@ -9,13 +9,14 @@ export class AspirationService {
   constructor(
     @InjectRepository(Aspiration)
     private aspirationRepository: Repository<Aspiration>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   async create(params: CreateAspirationParams): Promise<Aspiration> {
     const { userId, name } = params;
 
-    const targetUser = new User();
-    targetUser.id = userId;
+    const targetUser = await this.userRepository.findOne(userId);
 
     const aspiration = this.aspirationRepository.create({
       user: targetUser,
