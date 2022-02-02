@@ -18,6 +18,9 @@ export class Aspiration {
   @ManyToOne(() => User, { nullable: false, cascade: false })
   user: User;
 
+  @Column({ type: 'int' })
+  userId: number;
+
   @OneToMany(() => Action, (action) => action.aspiration)
   actions: Action[];
 
