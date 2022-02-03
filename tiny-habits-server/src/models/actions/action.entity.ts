@@ -17,11 +17,17 @@ export class Action {
   @ManyToOne(() => User, { nullable: false, cascade: false })
   user: User;
 
+  @Column({ type: 'int' })
+  userId: number;
+
   @ManyToOne(() => Aspiration, (aspiration) => aspiration.actions, {
     nullable: true,
     cascade: false,
   })
   aspiration: Aspiration;
+
+  @Column({ type: 'int' })
+  aspirationId: number;
 
   @Column()
   name: string;
