@@ -2,7 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ActionModel {
+  aspiration: AspirationModel!
+  createdAt: String!
+  id: ID!
+  name: String!
+  updatedAt: String!
+  user: UserModel!
+}
+
 type AspirationModel {
+  actions: [ActionModel!]!
   createdAt: String!
   id: ID!
   name: String!
@@ -11,12 +21,14 @@ type AspirationModel {
 }
 
 type Query {
+  action(id: Int!): ActionModel!
   aspiration(id: Int!): AspirationModel!
   me: UserModel!
   user(id: Int!): UserModel!
 }
 
 type UserModel {
+  actions: [ActionModel!]!
   aspirations: [AspirationModel!]!
   createdAt: String!
   email: String!

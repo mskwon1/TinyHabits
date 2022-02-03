@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Int,
@@ -7,8 +6,7 @@ import {
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
-import { GqlAuthGuard } from '@src/api/auth/gql-auth.guard';
-import { GqlUser } from '@src/decorators/gql-user.decorator';
+import { ActionService } from '../actions/action.service';
 import { UserService } from '../users/user.service';
 import { Aspiration } from './aspiration.entity';
 import { AspirationModel } from './aspiration.model';
@@ -18,6 +16,7 @@ import { AspirationService } from './aspiration.service';
 export class AspirationResolver {
   constructor(
     private readonly aspirationService: AspirationService,
+    private readonly actionService: ActionService,
     private readonly userService: UserService,
   ) {}
 
@@ -31,5 +30,12 @@ export class AspirationResolver {
     const { userId } = aspiration;
 
     return this.userService.findOneById(userId);
+  }
+
+  @ResolveField()
+  async actions(@Parent() aspiration: Aspiration) {
+    const { id: aspirationId } = aspiration;
+
+    return this.actionService.findAll({ aspirationId });
   }
 }
