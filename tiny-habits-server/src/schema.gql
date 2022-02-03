@@ -12,6 +12,7 @@ type ActionModel {
 }
 
 type AspirationModel {
+  actions: [ActionModel!]!
   createdAt: String!
   id: ID!
   name: String!
