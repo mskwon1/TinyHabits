@@ -28,6 +28,7 @@ type Query {
 }
 
 type UserModel {
+  actions: [ActionModel!]!
   aspirations: [AspirationModel!]!
   createdAt: String!
   email: String!

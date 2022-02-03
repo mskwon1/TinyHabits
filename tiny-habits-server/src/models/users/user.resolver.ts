@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { GqlAuthGuard } from '@src/api/auth/gql-auth.guard';
 import { GqlUser } from '@src/decorators/gql-user.decorator';
+import { ActionService } from '../actions/action.service';
 import { AspirationService } from '../aspirations/aspiration.service';
 import { User } from './user.entity';
 import { UserModel } from './user.model';
@@ -19,6 +20,7 @@ export class UserResolver {
   constructor(
     private readonly userService: UserService,
     private readonly aspirationService: AspirationService,
+    private readonly actionService: ActionService,
   ) {}
 
   @Query((returns) => UserModel)
@@ -37,5 +39,12 @@ export class UserResolver {
     const { id } = user;
 
     return this.aspirationService.findAll({ userId: id });
+  }
+
+  @ResolveField()
+  async actions(@Parent() user: UserModel) {
+    const { id: userId } = user;
+
+    return this.actionService.findAll({ userId });
   }
 }
