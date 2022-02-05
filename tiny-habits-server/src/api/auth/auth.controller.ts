@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Protected } from '@src/decorators/protected.decorator';
 import { AuthUser } from '@src/decorators/user.decorator';
 import { User } from '@src/models/users/user.entity';
@@ -16,10 +16,10 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(
-    @Request() req,
+    @AuthUser() user: User,
   ): Promise<{ userId: number; email: string; accessToken: string }> {
-    const { accessToken } = await this.authService.signJwtToken(req.user);
-    const { id, email } = req.user;
+    const { accessToken } = await this.authService.signJwtToken(user);
+    const { id, email } = user;
 
     return {
       userId: id,
@@ -35,7 +35,7 @@ export class AuthController {
   }
 
   @Get('/public')
-  async public(@Request() req) {
+  async public() {
     return 'this is public';
   }
 }

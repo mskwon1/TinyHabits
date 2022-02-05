@@ -32,7 +32,7 @@ export class AspirationService {
     return this.aspirationRepository.find({ where: { userId } });
   }
 
-  async findOneById(aspirationId: number): Promise<Aspiration> {
+  async findOneById(aspirationId: number): Promise<Aspiration | undefined> {
     return this.aspirationRepository.findOne(aspirationId);
   }
 
@@ -47,7 +47,7 @@ export class AspirationService {
       aspirationId,
     );
 
-    return updatedAspiration;
+    return updatedAspiration as Aspiration;
   }
 
   async delete(aspirationId: number): Promise<void> {
