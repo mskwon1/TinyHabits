@@ -12,7 +12,7 @@ import { Action } from './action.entity';
 import { ActionModel } from './action.model';
 import { ActionService } from './action.service';
 
-@Resolver((of) => ActionModel)
+@Resolver(() => ActionModel)
 export class ActionResolver {
   constructor(
     private readonly aspirationService: AspirationService,

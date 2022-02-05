@@ -12,7 +12,7 @@ import { Aspiration } from './aspiration.entity';
 import { AspirationModel } from './aspiration.model';
 import { AspirationService } from './aspiration.service';
 
-@Resolver((of) => AspirationModel)
+@Resolver(() => AspirationModel)
 export class AspirationResolver {
   constructor(
     private readonly aspirationService: AspirationService,

@@ -15,7 +15,7 @@ import { User } from './user.entity';
 import { UserModel } from './user.model';
 import { UserService } from './user.service';
 
-@Resolver((of) => UserModel)
+@Resolver(() => UserModel)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,

@@ -24,7 +24,7 @@ export class ActionService {
     return this.actionRepository.find(options);
   }
 
-  async findOneById(actionId: number): Promise<Action> {
+  async findOneById(actionId: number): Promise<Action | undefined> {
     return this.actionRepository.findOne(actionId);
   }
 
@@ -34,7 +34,7 @@ export class ActionService {
     await this.actionRepository.update(actionId, { name });
     const updatedAction = await this.actionRepository.findOne(actionId);
 
-    return updatedAction;
+    return updatedAction as Action;
   }
 
   async delete(actionId: number): Promise<void> {

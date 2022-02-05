@@ -19,7 +19,7 @@ export class AuthService {
       return null;
     }
 
-    const loginResult = await bcrypt.compare(password, user.password);
+    const loginResult = await bcrypt.compare(password, user.password as string);
 
     if (!loginResult) {
       return null;

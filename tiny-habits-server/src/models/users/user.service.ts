@@ -29,11 +29,14 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOneById(userId: number): Promise<User> {
+  async findOneById(userId: number): Promise<User | undefined> {
     return this.userRepository.findOne(userId);
   }
 
-  async findOneByEmail(email: string, includePassword = false): Promise<User> {
+  async findOneByEmail(
+    email: string,
+    includePassword = false,
+  ): Promise<User | undefined> {
     if (includePassword) {
       return this.userRepository
         .createQueryBuilder('user')
@@ -52,9 +55,9 @@ export class UserService {
     const { name } = updateUserParams;
 
     await this.userRepository.update(userId, { name });
-    const updatedUser = this.userRepository.findOne(userId);
+    const updatedUser = await this.userRepository.findOne(userId);
 
-    return updatedUser;
+    return updatedUser as User;
   }
 
   async delete(userId: number): Promise<void> {
