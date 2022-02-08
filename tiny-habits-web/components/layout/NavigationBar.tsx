@@ -4,11 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Link from 'next/link';
 
 const LoginButton = (): JSX.Element => {
-  return (
-    <Button variant="contained" color="primary" disableElevation={true}>
-      로그인
-    </Button>
-  );
+  return <NavigationMenuButton title="로그인" />;
 };
 
 type NavigationMenuProps = {
@@ -25,7 +21,10 @@ const NavigationMenuButton = ({
   href,
 }: NavigationMenuProps): JSX.Element => {
   const buttonComponent = (
-    <Button className={`focus:outline-none ${className}`} startIcon={icon}>
+    <Button
+      color="inherit"
+      className={`focus:outline-none  ${className}`}
+      startIcon={icon}>
       {title}
     </Button>
   );
@@ -58,7 +57,7 @@ const NavigationMenus = (): JSX.Element => {
 
 export function NavigationBar(): JSX.Element {
   return (
-    <AppBar className="px-3" position="sticky" color="secondary">
+    <AppBar className="px-3" position="sticky" color="primary">
       <Toolbar className="flex justify-between">
         <Link href="/">
           <div className="px-3 text-xl font-bold cursor-pointer">'습'</div>

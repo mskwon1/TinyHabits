@@ -6,10 +6,14 @@ export const theme: Theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#78909c',
+      main: '#004c3f',
+      light: '#38786a',
+      dark: '#002419',
     },
     secondary: {
-      main: '#ffffff',
+      main: '#6d4c41',
+      light: '#9c786c',
+      dark: '#40241a',
     },
   },
   spacing: (factor) => `${0.25 * factor}rem`,
