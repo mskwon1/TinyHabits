@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
+const MAX_AGE_IN_SECONDS = 30 * 24 * 60 * 60;
+
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -10,6 +12,7 @@ export default NextAuth({
         password: { label: '비밀번호', type: 'password' },
       },
       async authorize(credentials, req) {
+        // TODO : connect server api
         const { email, password } = credentials;
         const user = { id: 1, name: '민수', email };
 
@@ -17,4 +20,28 @@ export default NextAuth({
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: MAX_AGE_IN_SECONDS,
+  },
+  pages: {
+    signIn: '/login',
+    signOut: '/logout',
+  },
+  callbacks: {
+    // TODO : implement callback funcs
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+    async session({ session, token, user }) {
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return token;
+    },
+  },
+  debug: process.env.APP_ENV === 'local',
 });
