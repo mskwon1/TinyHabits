@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
+import { login } from '../../api/auth';
 
 const MAX_AGE_IN_SECONDS = 30 * 24 * 60 * 60;
 
@@ -14,9 +15,9 @@ export default NextAuth({
       async authorize(credentials, req) {
         // TODO : connect server api
         const { email, password } = credentials;
-        const user = { id: 1, name: '민수', email };
+        const loginResponse = await login({ email, password });
 
-        return user || null;
+        return loginResponse;
       },
     }),
   ],
