@@ -4,14 +4,19 @@ import { theme } from '../utils/globalTheme';
 import '../styles/globals.css';
 import Header from '../components/layout/Header';
 import { NavigationBar } from '../components/layout/NavigationBar';
+import { SessionProvider } from 'next-auth/react';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const { session, ...restPageProps } = pageProps;
+
   return (
-    <ThemeProvider theme={theme}>
-      <Header />
-      <NavigationBar />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SessionProvider session={session}>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <NavigationBar />
+        <Component {...restPageProps} />
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 
