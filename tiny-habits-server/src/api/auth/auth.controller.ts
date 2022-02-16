@@ -19,13 +19,11 @@ export class AuthController {
   @Post('/login')
   async login(
     @AuthUser() user: User,
-  ): Promise<{ userId: number; email: string; accessToken: string }> {
+  ): Promise<{ user: User; accessToken: string }> {
     const { accessToken } = await this.authService.signJwtToken(user);
-    const { id, email } = user;
 
     return {
-      userId: id,
-      email,
+      user,
       accessToken,
     };
   }
