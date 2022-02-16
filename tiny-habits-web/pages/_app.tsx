@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import Header from '../components/layout/Header';
 import { NavigationBar } from '../components/layout/NavigationBar';
 import { SessionProvider } from 'next-auth/react';
+import { Box, CssBaseline } from '@material-ui/core';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const { session, ...restPageProps } = pageProps;
@@ -12,9 +13,12 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header />
-        <NavigationBar />
-        <Component {...restPageProps} />
+        <Box height="100vh">
+          <NavigationBar />
+          <Component {...restPageProps} />
+        </Box>
       </ThemeProvider>
     </SessionProvider>
   );
