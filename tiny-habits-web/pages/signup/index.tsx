@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Typography } from '@material-ui/core';
+import { Box, Container, TextField, Typography } from '@mui/material';
 
 const SignupPage: React.FC = () => {
   return (

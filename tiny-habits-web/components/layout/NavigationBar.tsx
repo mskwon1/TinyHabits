@@ -1,6 +1,6 @@
-import { AppBar, Toolbar, Button } from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { AppBar, Toolbar, Button } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
 
 const LoginButton = (): JSX.Element => {
@@ -24,7 +24,8 @@ const NavigationMenuButton = ({
     <Button
       color="inherit"
       className={`focus:outline-none  ${className}`}
-      startIcon={icon}>
+      startIcon={icon}
+    >
       {title}
     </Button>
   );
