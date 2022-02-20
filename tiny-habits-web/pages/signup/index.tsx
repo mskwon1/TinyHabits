@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import { FormProvider } from 'react-hook-form';
 import SignupForm from '@components/forms/SingupForm';
 import useSignupForm from 'hooks/form-hooks/useSignupForm';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const SignupPage: React.FC = () => {
   const { formHandlers, inputProps, submitHandler } = useSignupForm();
@@ -30,8 +31,9 @@ const SignupPage: React.FC = () => {
             size="large"
             sx={{ marginTop: 5 }}
             onClick={submitHandler}
+            endIcon={<ArrowForwardIcon />}
           >
-            회원가입 하기
+            회원가입
           </Button>
         </Container>
       </Box>
