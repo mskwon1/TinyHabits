@@ -1,6 +1,11 @@
-import { Box, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
+import { FormProvider } from 'react-hook-form';
+import SignupForm from '@components/forms/SingupForm';
+import useSignupForm from 'hooks/form-hooks/useSignupForm';
 
 const SignupPage: React.FC = () => {
+  const { formHandlers, inputProps, submitHandler } = useSignupForm();
+
   return (
     <Container>
       <Box component="form" sx={{ paddingTop: 5 }}>
@@ -8,7 +13,7 @@ const SignupPage: React.FC = () => {
           회원가입
         </Typography>
         <Container
-          maxWidth="sm"
+          maxWidth="xs"
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -17,27 +22,17 @@ const SignupPage: React.FC = () => {
             marginTop: 8,
           }}
         >
-          <TextField
-            id="name"
-            label="이름"
-            variant="outlined"
-            fullWidth
+          <FormProvider {...formHandlers}>
+            <SignupForm inputProps={inputProps} />
+          </FormProvider>
+          <Button
+            variant="contained"
+            size="large"
             sx={{ marginTop: 5 }}
-          />
-          <TextField
-            id="email"
-            label="이메일"
-            variant="outlined"
-            fullWidth
-            sx={{ marginTop: 5 }}
-          />
-          <TextField
-            id="password"
-            label="패스워드"
-            variant="outlined"
-            fullWidth
-            sx={{ marginTop: 5 }}
-          />
+            onClick={submitHandler}
+          >
+            회원가입 하기
+          </Button>
         </Container>
       </Box>
     </Container>
