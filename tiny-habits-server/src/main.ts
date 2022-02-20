@@ -9,6 +9,7 @@ const DEFAULT_PORT_NUMBER = 3005;
 async function bootstrap() {
   const expressApp = await NestFactory.create<NestExpressApplication>(
     AppModule,
+    { cors: true },
   );
 
   const configService = expressApp.get(ConfigService);
