@@ -9,10 +9,8 @@ export const login = async (params: {
   const { data } = await axios.post<LoginResponse>(
     `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/api/auth/login`,
     {
-      data: {
-        email,
-        password,
-      },
+      email,
+      password,
     }
   );
 
@@ -29,11 +27,9 @@ export const signup = async (params: {
   const { data } = await axios.post<SignupResponse>(
     `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/api/auth/signup`,
     {
-      data: {
-        email,
-        name,
-        password,
-      },
+      email,
+      name,
+      password,
     }
   );
 
