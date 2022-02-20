@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
-import { login } from '../../api/auth';
+import { login } from '@api/auth';
 
 const MAX_AGE_IN_SECONDS = 30 * 24 * 60 * 60;
 
