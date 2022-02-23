@@ -1,30 +1,38 @@
-import { AppBar, Toolbar, Button, Box, Typography } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Box,
+  Typography,
+  Skeleton,
+} from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
 
 const LoginButton = (): JSX.Element => {
   return <NavigationMenuButton title="로그인" href="/login" />;
 };
 
+const LogoutButton = (): JSX.Element => {
+  return <NavigationMenuButton title="로그아웃" onClick={signOut} />;
+};
+
 type NavigationMenuProps = {
   title: string;
   href?: string;
-  className?: string;
   icon?: JSX.Element;
+  onClick?: () => void;
 };
 
 const NavigationMenuButton = ({
   icon,
   title,
-  className,
   href,
+  onClick,
 }: NavigationMenuProps): JSX.Element => {
   const buttonComponent = (
-    <Button
-      color="inherit"
-      className={`focus:outline-none  ${className}`}
-      startIcon={icon}
-    >
+    <Button color="inherit" startIcon={icon} onClick={onClick}>
       {title}
     </Button>
   );
@@ -51,6 +59,8 @@ const NavigationMenus = (): JSX.Element => {
 };
 
 export function NavigationBar(): JSX.Element {
+  const { status } = useSession();
+
   return (
     <AppBar position="sticky" color="primary" sx={{ paddingX: 1 }}>
       <Toolbar sx={{ flex: 1, justifyContent: 'space-between' }}>
@@ -67,7 +77,11 @@ export function NavigationBar(): JSX.Element {
         <Box flex={1} flexGrow={1} mx={5}>
           <NavigationMenus />
         </Box>
-        <LoginButton />
+        {status === 'loading' && (
+          <Skeleton sx={{ bgcolor: 'grey.300' }} width={70} height={50} />
+        )}
+        {status === 'authenticated' && <LogoutButton />}
+        {status === 'unauthenticated' && <LoginButton />}
       </Toolbar>
     </AppBar>
   );
