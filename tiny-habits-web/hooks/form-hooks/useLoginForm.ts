@@ -31,7 +31,7 @@ const useLoginForm = () => {
 
   const onSubmit = useCallback<SubmitHandler<LoginInputs>>(async (data) => {
     const { email, password } = data;
-    await signIn('credentials', { email, password });
+    await signIn('credentials', { email, password, callbackUrl: '/' });
   }, []);
 
   return {

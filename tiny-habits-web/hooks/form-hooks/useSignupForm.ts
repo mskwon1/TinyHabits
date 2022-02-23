@@ -54,7 +54,7 @@ const useSignupForm = () => {
     const { email, password } = data;
     const signupResult = await signup(data);
 
-    await signIn('credentials', { email, password });
+    await signIn('credentials', { email, password, callbackUrl: '/' });
   }, []);
 
   return {
