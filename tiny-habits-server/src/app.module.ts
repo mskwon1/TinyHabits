@@ -28,6 +28,7 @@ import { JwtAuthGuard } from './api/auth/jwt-auth.guard';
           sortSchema: true,
           playground: configService.get('APP_ENV') !== 'production',
           debug: configService.get('APP_ENV') !== 'production',
+          cors: true,
         };
       },
       inject: [ConfigService],

@@ -1,10 +1,12 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Protected } from '@src/decorators/protected.decorator';
 import { AuthUser } from '@src/decorators/user.decorator';
 import { User } from '@src/models/users/user.entity';
 import { UserService } from '@src/models/users/user.service';
 import { AuthService } from './auth.service';
+import { SignupDto } from './dto/signup.dto';
 import { LocalAuthGuard } from './local-auth.guard';
+import _ from 'lodash';
 
 @Controller('api/auth')
 export class AuthController {
@@ -15,17 +17,20 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(
-    @AuthUser() user: User,
-  ): Promise<{ userId: number; email: string; accessToken: string }> {
+  async login(@AuthUser() user: User): Promise<User & { accessToken: string }> {
     const { accessToken } = await this.authService.signJwtToken(user);
-    const { id, email } = user;
 
     return {
-      userId: id,
-      email,
+      ...user,
       accessToken,
     };
+  }
+
+  @Post('/signup')
+  async signup(@Body() signupDto: SignupDto): Promise<User> {
+    const signedUpUser = await this.userService.create(signupDto);
+
+    return _.omit(signedUpUser, ['password']);
   }
 
   @Protected()

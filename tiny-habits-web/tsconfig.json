@@ -19,7 +19,13 @@
     "jsx": "preserve",
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["./api/*"],
+      "@components/*": ["./components/*"],
+      "@constants": ["./@types/constants"],
+    }
   },
   "include": [
     "next-env.d.ts",

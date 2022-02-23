@@ -11,5 +11,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/no-unescaped-entities': 'off',
+    'react/jsx-closing-bracket-location': [1, 'line-aligned'],
   },
 };

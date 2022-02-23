@@ -1,6 +1,10 @@
-import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@mui/material/styles';
 
-export const theme: Theme = createMuiTheme({
+declare module '@mui/material/styles' {
+  type DefaultTheme = Theme;
+}
+
+export const theme = createTheme({
   typography: {
     fontFamily: 'NanumBarunGothic',
   },

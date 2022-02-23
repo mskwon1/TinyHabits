@@ -10,11 +10,18 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.4.2",
+    "@mui/material": "^5.4.2",
+    "@mui/styles": "^5.4.2",
+    "axios": "^0.26.0",
+    "lodash": "^4.17.21",
     "next": "12",
+    "next-auth": "^4.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.27.1",
     "swr": "^0.5.6"
   },
   "devDependencies": {
@@ -24,12 +31,12 @@
     "@storybook/addon-links": "^6.2.9",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/react": "^6.2.9",
+    "@types/lodash": "^4.14.178",
     "@types/next": "^9.0.0",
-    "@types/react": "^17.0.10",
+    "@types/react": "^17.0.39",
     "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
-    "autoprefixer": "^10.2.6",
     "babel-loader": "^8.2.2",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
@@ -39,12 +46,10 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "postcss": "^8",
     "prettier": "^2.3.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "storybook-addon-material-ui": "^0.9.0-alpha.24",
-    "tailwindcss": "^2.1.4",
     "typescript": "^4.3.2"
   }
 }

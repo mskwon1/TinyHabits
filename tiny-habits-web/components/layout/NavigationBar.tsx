@@ -1,30 +1,42 @@
-import { AppBar, Toolbar, Button } from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
-import DeleteIcon from '@material-ui/icons/Delete';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Box,
+  Typography,
+  Skeleton,
+} from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
+
+const SignupButton = (): JSX.Element => {
+  return <NavigationMenuButton title="회원가입" href="/signup" />;
+};
 
 const LoginButton = (): JSX.Element => {
-  return <NavigationMenuButton title="로그인" />;
+  return <NavigationMenuButton title="로그인" href="/login" />;
+};
+
+const LogoutButton = (): JSX.Element => {
+  return <NavigationMenuButton title="로그아웃" onClick={signOut} />;
 };
 
 type NavigationMenuProps = {
   title: string;
   href?: string;
-  className?: string;
   icon?: JSX.Element;
+  onClick?: () => void;
 };
 
 const NavigationMenuButton = ({
   icon,
   title,
-  className,
   href,
+  onClick,
 }: NavigationMenuProps): JSX.Element => {
   const buttonComponent = (
-    <Button
-      color="inherit"
-      className={`focus:outline-none  ${className}`}
-      startIcon={icon}>
+    <Button color="inherit" startIcon={icon} onClick={onClick}>
       {title}
     </Button>
   );
@@ -40,11 +52,6 @@ const NavigationMenus = (): JSX.Element => {
   return (
     <>
       <NavigationMenuButton
-        title="습관 버리기"
-        href="/remove-habits"
-        icon={<DeleteIcon style={{ color: 'black' }} />}
-      />
-      <NavigationMenuButton
         title="황금행동 찾기"
         href="/golden-habits"
         icon={<StarIcon style={{ color: 'gold' }} />}
@@ -56,16 +63,34 @@ const NavigationMenus = (): JSX.Element => {
 };
 
 export function NavigationBar(): JSX.Element {
+  const { status } = useSession();
+
   return (
-    <AppBar className="px-3" position="sticky" color="primary">
-      <Toolbar className="flex justify-between">
+    <AppBar position="sticky" color="primary" sx={{ paddingX: 1 }}>
+      <Toolbar sx={{ flex: 1, justifyContent: 'space-between' }}>
         <Link href="/">
-          <div className="px-3 text-xl font-bold cursor-pointer">'습'</div>
+          <Typography
+            variant="h5"
+            px={3}
+            fontWeight={600}
+            style={{ cursor: 'pointer' }}
+          >
+            TinyHabits
+          </Typography>
         </Link>
-        <div className="flex flex-grow justify-start space-x-2 mx-5">
+        <Box flex={1} flexGrow={1} mx={5}>
           <NavigationMenus />
-        </div>
-        <LoginButton />
+        </Box>
+        {status === 'loading' && (
+          <Skeleton sx={{ bgcolor: 'green.800' }} width={70} height={50} />
+        )}
+        {status === 'authenticated' && <LogoutButton />}
+        {status === 'unauthenticated' && (
+          <>
+            <LoginButton />
+            <SignupButton />
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
