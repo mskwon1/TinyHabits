@@ -10,6 +10,10 @@ import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 
+const SignupButton = (): JSX.Element => {
+  return <NavigationMenuButton title="회원가입" href="/signup" />;
+};
+
 const LoginButton = (): JSX.Element => {
   return <NavigationMenuButton title="로그인" href="/login" />;
 };
@@ -81,7 +85,12 @@ export function NavigationBar(): JSX.Element {
           <Skeleton sx={{ bgcolor: 'green.800' }} width={70} height={50} />
         )}
         {status === 'authenticated' && <LogoutButton />}
-        {status === 'unauthenticated' && <LoginButton />}
+        {status === 'unauthenticated' && (
+          <>
+            <LoginButton />
+            <SignupButton />
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
