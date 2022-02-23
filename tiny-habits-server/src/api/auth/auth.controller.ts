@@ -17,13 +17,11 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(
-    @AuthUser() user: User,
-  ): Promise<{ user: User; accessToken: string }> {
+  async login(@AuthUser() user: User): Promise<User & { accessToken: string }> {
     const { accessToken } = await this.authService.signJwtToken(user);
 
     return {
-      user,
+      ...user,
       accessToken,
     };
   }
