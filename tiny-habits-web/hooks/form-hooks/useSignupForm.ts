@@ -1,7 +1,6 @@
 import { signup } from '@api/auth';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@constants';
 import _ from 'lodash';
-import Email from 'next-auth/providers/email';
 import { signIn } from 'next-auth/react';
 import { useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

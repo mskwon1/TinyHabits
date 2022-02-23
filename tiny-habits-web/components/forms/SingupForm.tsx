@@ -6,7 +6,7 @@ type SignupFormProps = {
   inputProps: Record<keyof SignupInputs, UseFormRegisterReturn>;
 };
 
-const SignupForm = ({ inputProps }: SignupFormProps) => {
+const SignupForm = ({ inputProps }: SignupFormProps): JSX.Element => {
   const {
     formState: { errors },
   } = useFormContext<SignupInputs>();
