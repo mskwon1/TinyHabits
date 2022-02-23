@@ -1,10 +1,9 @@
-import { AppBar, Toolbar, Button } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
 
 const LoginButton = (): JSX.Element => {
-  return <NavigationMenuButton title="로그인" />;
+  return <NavigationMenuButton title="로그인" href="/login" />;
 };
 
 type NavigationMenuProps = {
@@ -41,11 +40,6 @@ const NavigationMenus = (): JSX.Element => {
   return (
     <>
       <NavigationMenuButton
-        title="습관 버리기"
-        href="/remove-habits"
-        icon={<DeleteIcon style={{ color: 'black' }} />}
-      />
-      <NavigationMenuButton
         title="황금행동 찾기"
         href="/golden-habits"
         icon={<StarIcon style={{ color: 'gold' }} />}
@@ -58,14 +52,21 @@ const NavigationMenus = (): JSX.Element => {
 
 export function NavigationBar(): JSX.Element {
   return (
-    <AppBar className="px-3" position="sticky" color="primary">
-      <Toolbar className="flex justify-between">
+    <AppBar position="sticky" color="primary" sx={{ paddingX: 1 }}>
+      <Toolbar sx={{ flex: 1, justifyContent: 'space-between' }}>
         <Link href="/">
-          <div className="px-3 text-xl font-bold cursor-pointer">'습'</div>
+          <Typography
+            variant="h5"
+            px={3}
+            fontWeight={600}
+            style={{ cursor: 'pointer' }}
+          >
+            TinyHabits
+          </Typography>
         </Link>
-        <div className="flex flex-grow justify-start space-x-2 mx-5">
+        <Box flex={1} flexGrow={1} mx={5}>
           <NavigationMenus />
-        </div>
+        </Box>
         <LoginButton />
       </Toolbar>
     </AppBar>
