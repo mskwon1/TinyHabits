@@ -30,11 +30,10 @@ export default NextAuth({
     signOut: '/logout',
   },
   callbacks: {
-    // TODO : implement callback funcs
     async signIn({ user, account, profile, email, credentials }) {
       return true;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token.user;
       session.accessToken = token.user.accessToken;
 
