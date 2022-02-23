@@ -27,6 +27,7 @@ const SignupPage: React.FC = () => {
             <SignupForm inputProps={inputProps} />
           </FormProvider>
           <Button
+            type="submit"
             variant="contained"
             size="large"
             sx={{ marginTop: 5 }}

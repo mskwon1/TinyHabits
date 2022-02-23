@@ -24,6 +24,7 @@ const LoginPage: React.FC = () => {
             <LoginForm inputProps={inputProps} />
           </FormProvider>
           <Button
+            type="submit"
             variant="contained"
             size="large"
             sx={{ marginTop: 5 }}
