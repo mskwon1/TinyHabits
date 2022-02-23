@@ -78,7 +78,7 @@ export function NavigationBar(): JSX.Element {
           <NavigationMenus />
         </Box>
         {status === 'loading' && (
-          <Skeleton sx={{ bgcolor: 'grey.300' }} width={70} height={50} />
+          <Skeleton sx={{ bgcolor: 'green.800' }} width={70} height={50} />
         )}
         {status === 'authenticated' && <LogoutButton />}
         {status === 'unauthenticated' && <LoginButton />}
