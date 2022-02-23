@@ -1,5 +1,4 @@
-type LoginResponse = {
-  user: UserEntity;
+type LoginResponse = UserEntity & {
   accessToken: string;
 };
 
