@@ -53,7 +53,7 @@ const NavigationMenus = (): JSX.Element => {
     <>
       <NavigationMenuButton
         title="황금행동 찾기"
-        href="/golden-habits"
+        href="/golden-actions"
         icon={<StarIcon style={{ color: 'gold' }} />}
       />
       {/* <NavigationMenu title="메뉴 3" /> */}
