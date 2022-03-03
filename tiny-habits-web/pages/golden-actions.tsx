@@ -10,6 +10,7 @@ import { Box } from '@mui/system';
 import InfoIcon from '@mui/icons-material/Info';
 import React from 'react';
 import _ from 'lodash';
+import { FormProvider, useForm } from 'react-hook-form';
 
 const SAMPLE_ASPIRATIONS = [
   '숙면',
@@ -18,6 +19,19 @@ const SAMPLE_ASPIRATIONS = [
   '휴대전화 사용 줄이기',
 ];
 
+const HelpSection = (): JSX.Element => {
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <InfoIcon sx={{ marginRight: 2 }} />
+      <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
+        열망은 명확할수록 좋아요
+        <br />
+        생각에 충분한 시간을 쓰셔도 좋고, 일단 쓰고 나중에 바꿔도 됩니다
+      </Typography>
+    </Box>
+  );
+};
+
 const AspirationInputPage = (): JSX.Element => {
   return (
     <>
@@ -25,6 +39,7 @@ const AspirationInputPage = (): JSX.Element => {
         container
         spacing={4}
         sx={{ paddingTop: 4, paddingX: { xs: 5, lg: 20 } }}
+        height="calc(100vh - 64px)"
         justifyContent="center"
         alignItems="center"
       >
@@ -48,7 +63,7 @@ const AspirationInputPage = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" rowGap={2} columnGap={2} flexWrap="wrap">
             {_.map(SAMPLE_ASPIRATIONS, (aspiration) => {
               return (
                 <Chip
@@ -81,30 +96,32 @@ const AspirationInputPage = (): JSX.Element => {
             </Button>
           </Grid>
         </Grid>
-        <Grid
-          item
-          justifyContent="center"
-          alignItems="center"
-          display="flex"
-          xs={12}
-        >
-          <InfoIcon sx={{ marginRight: 2 }} />
-          <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
-            열망은 명확할수록 좋아요
-            <br />
-            생각에 충분한 시간을 쓰셔도 좋고, 일단 쓰고 나중에 바꿔도 됩니다
-          </Typography>
+        <Grid item xs={12}>
+          <HelpSection />
         </Grid>
       </Grid>
     </>
   );
 };
 
+type ActionInput = {
+  name: string;
+  isEffective: boolean;
+  isEasy: boolean;
+};
+
+type GoldenActionInputs = {
+  aspiration: string;
+  actions: ActionInput[];
+};
+
 const GoldenActionsPage = (): JSX.Element => {
+  const handlers = useForm<GoldenActionInputs>();
+
   return (
-    <>
+    <FormProvider {...handlers}>
       <AspirationInputPage />
-    </>
+    </FormProvider>
   );
 };
 
