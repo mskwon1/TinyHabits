@@ -9,6 +9,7 @@ import {
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import { NAVBAR_HEIGHT } from '@constants';
 
 const SignupButton = (): JSX.Element => {
   return <NavigationMenuButton title="회원가입" href="/signup" />;
