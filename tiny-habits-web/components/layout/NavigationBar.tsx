@@ -66,7 +66,11 @@ export function NavigationBar(): JSX.Element {
   const { status } = useSession();
 
   return (
-    <AppBar position="sticky" color="primary" sx={{ paddingX: 1 }}>
+    <AppBar
+      position="sticky"
+      color="primary"
+      sx={{ paddingX: 1, height: NAVBAR_HEIGHT }}
+    >
       <Toolbar sx={{ flex: 1, justifyContent: 'space-between' }}>
         <Link href="/">
           <Typography
