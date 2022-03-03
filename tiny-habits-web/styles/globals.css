@@ -11,4 +11,5 @@
 
 * {
   font-family: 'NanumBarunGothic';
+  word-break: keep-all;
 }
