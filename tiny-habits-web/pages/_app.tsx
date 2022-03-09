@@ -15,10 +15,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Header />
-        <Box height="100vh">
-          <NavigationBar />
-          <Component {...restPageProps} />
-        </Box>
+        <NavigationBar />
+        <Component {...restPageProps} />
       </ThemeProvider>
     </SessionProvider>
   );
