@@ -12,8 +12,6 @@ import React from 'react';
 import _ from 'lodash';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { GOLDEN_ACTION_STEPS } from '@constants';
 
 const SAMPLE_ASPIRATIONS = [
   '숙면',
@@ -60,44 +58,14 @@ const MainSection = (): JSX.Element => {
   );
 };
 
-const ExampleStackSection = (): JSX.Element => {
-  return (
-    <Box>
-      <Stack direction="row" rowGap={2} columnGap={2} flexWrap="wrap">
-        {_.map(SAMPLE_ASPIRATIONS, (aspiration) => {
-          return (
-            <Chip
-              key={aspiration}
-              label={aspiration}
-              color="primary"
-              sx={{ cursor: 'pointer' }}
-            />
-          );
-        })}
-      </Stack>
-    </Box>
-  );
-};
-
 const AspirationFormSection = (): JSX.Element => {
-  const router = useRouter();
   const { register } = useFormContext<{ aspiration: string }>();
-
-  const onConfirm = useCallback(() => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, step: GOLDEN_ACTION_STEPS.ACTIONS_INPUT },
-      },
-      undefined,
-      { shallow: true }
-    );
-  }, [router]);
 
   return (
     <Box>
       <Grid
         container
+        xs={12}
         justifyContent="center"
         alignItems="center"
         rowSpacing={2}
@@ -112,7 +80,7 @@ const AspirationFormSection = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
-          <Button fullWidth variant="contained" onClick={onConfirm}>
+          <Button fullWidth variant="contained">
             확인
           </Button>
         </Grid>
@@ -121,7 +89,7 @@ const AspirationFormSection = (): JSX.Element => {
   );
 };
 
-const AspirationInputPage = (): JSX.Element => {
+const ActionsInputPage = (): JSX.Element => {
   return (
     <>
       <Box
@@ -133,7 +101,6 @@ const AspirationInputPage = (): JSX.Element => {
       >
         <TitleSection />
         <MainSection />
-        <ExampleStackSection />
         <AspirationFormSection />
         <HelpSection />
       </Box>
@@ -141,4 +108,4 @@ const AspirationInputPage = (): JSX.Element => {
   );
 };
 
-export default AspirationInputPage;
+export default ActionsInputPage;
