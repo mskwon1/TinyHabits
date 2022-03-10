@@ -14,6 +14,7 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { GOLDEN_ACTION_STEPS } from '@constants';
+import MainCloudSection from '../sections/MainCloudSection';
 
 const SAMPLE_ASPIRATIONS = [
   '숙면',
@@ -41,21 +42,6 @@ const TitleSection = (): JSX.Element => {
       <Typography variant="h5" fontWeight={800} textAlign="center">
         나의 황금 행동 찾기
       </Typography>
-    </Box>
-  );
-};
-
-const MainSection = (): JSX.Element => {
-  return (
-    <Box
-      flexGrow={1}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Box textAlign="center">
-        <img src="/images/cloud.png" width={300} alt="cloud" />
-      </Box>
     </Box>
   );
 };
@@ -121,6 +107,11 @@ const AspirationFormSection = (): JSX.Element => {
             error={!!errors.aspiration}
             helperText={errors.aspiration?.message}
             InputLabelProps={{ shrink: !_.isEmpty(watch('aspiration')) }}
+            onKeyDown={(event) => {
+              if (event.keyCode === 13) {
+                onConfirm();
+              }
+            }}
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
@@ -150,7 +141,7 @@ const AspirationInputPage = (): JSX.Element => {
         rowGap={4}
       >
         <TitleSection />
-        <MainSection />
+        <MainCloudSection />
         <ExampleStackSection />
         <AspirationFormSection />
         <HelpSection />

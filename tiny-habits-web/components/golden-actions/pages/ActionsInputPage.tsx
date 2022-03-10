@@ -12,6 +12,7 @@ import React from 'react';
 import _ from 'lodash';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
+import MainCloudSection from '../sections/MainCloudSection';
 
 const SAMPLE_ASPIRATIONS = [
   '숙면',
@@ -43,40 +44,21 @@ const TitleSection = (): JSX.Element => {
   );
 };
 
-const MainSection = (): JSX.Element => {
-  return (
-    <Box
-      flexGrow={1}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Box textAlign="center">
-        <img src="/images/cloud.png" width={300} alt="cloud" />
-      </Box>
-    </Box>
-  );
-};
-
-const AspirationFormSection = (): JSX.Element => {
-  const { register } = useFormContext<{ aspiration: string }>();
+const ActionsFormSection = (): JSX.Element => {
+  const { register } = useFormContext<Pick<GoldenActionInputs, 'actions'>>();
 
   return (
     <Box>
       <Grid
         container
-        xs={12}
         justifyContent="center"
         alignItems="center"
         rowSpacing={2}
       >
         <Grid item xs={12} md={11}>
           <TextField
-            label="이루고자 하는 열망 또는 결과를 적어주세요"
+            label="열망/결과를 이루기 위해서 어떤 행동을 해야 할까요?"
             fullWidth
-            {...register('aspiration', {
-              required: { value: true, message: '열망을 입력해주세요' },
-            })}
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
@@ -100,8 +82,8 @@ const ActionsInputPage = (): JSX.Element => {
         rowGap={4}
       >
         <TitleSection />
-        <MainSection />
-        <AspirationFormSection />
+        <MainCloudSection />
+        <ActionsFormSection />
         <HelpSection />
       </Box>
     </>
