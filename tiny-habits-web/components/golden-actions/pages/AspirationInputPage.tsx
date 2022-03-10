@@ -61,6 +61,8 @@ const MainSection = (): JSX.Element => {
 };
 
 const ExampleStackSection = (): JSX.Element => {
+  const { setValue, setFocus } = useFormContext<{ aspiration: string }>();
+
   return (
     <Box>
       <Stack direction="row" rowGap={2} columnGap={2} flexWrap="wrap">
@@ -71,6 +73,10 @@ const ExampleStackSection = (): JSX.Element => {
               label={aspiration}
               color="primary"
               sx={{ cursor: 'pointer' }}
+              onClick={() => {
+                setValue('aspiration', aspiration);
+                setFocus('aspiration');
+              }}
             />
           );
         })}
@@ -81,7 +87,12 @@ const ExampleStackSection = (): JSX.Element => {
 
 const AspirationFormSection = (): JSX.Element => {
   const router = useRouter();
-  const { register } = useFormContext<{ aspiration: string }>();
+  const {
+    register,
+    watch,
+    formState: { errors },
+    setValue,
+  } = useFormContext<{ aspiration: string }>();
 
   const onConfirm = useCallback(() => {
     router.push(
@@ -106,13 +117,20 @@ const AspirationFormSection = (): JSX.Element => {
           <TextField
             label="이루고자 하는 열망 또는 결과를 적어주세요"
             fullWidth
-            {...register('aspiration', {
-              required: { value: true, message: '열망을 입력해주세요' },
-            })}
+            {...register('aspiration', { required: true })}
+            error={!!errors.aspiration}
+            helperText={errors.aspiration?.message}
+            InputLabelProps={{ shrink: !_.isEmpty(watch('aspiration')) }}
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
-          <Button fullWidth variant="contained" onClick={onConfirm}>
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={onConfirm}
+            disabled={_.isEmpty(watch('aspiration'))}
+          >
             확인
           </Button>
         </Grid>
