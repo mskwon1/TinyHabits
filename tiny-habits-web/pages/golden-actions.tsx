@@ -5,17 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ActionsInputPage from '@components/golden-actions/pages/ActionsInputPage';
 import { GOLDEN_ACTION_STEPS } from '@constants';
-
-type ActionInput = {
-  name: string;
-  isEffective: boolean;
-  isEasy: boolean;
-};
-
-type GoldenActionInputs = {
-  aspiration: string;
-  actions: ActionInput[];
-};
+import _ from 'lodash';
 
 const GoldenActionsPage = (): JSX.Element => {
   const router = useRouter();
@@ -27,14 +17,22 @@ const GoldenActionsPage = (): JSX.Element => {
   );
 
   useEffect(() => {
-    if (queryStep) {
+    if (!_.isNil(queryStep)) {
       setStep(+queryStep as GOLDEN_ACTION_STEPS);
+    } else {
+      setStep(GOLDEN_ACTION_STEPS.ASPIRATION_INPUT);
     }
   }, [queryStep]);
 
   console.log(step);
 
-  const handlers = useForm<GoldenActionInputs>();
+  const handlers = useForm<GoldenActionInputs>({
+    mode: 'onChange',
+    defaultValues: {
+      aspiration: '',
+      actions: [],
+    },
+  });
 
   let innerPage: JSX.Element;
 
