@@ -10,7 +10,13 @@ import { Box } from '@mui/system';
 import InfoIcon from '@mui/icons-material/Info';
 import React from 'react';
 import _ from 'lodash';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import AutoFixNormal from '@mui/icons-material/AutoFixNormal';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { useCallback } from 'react';
 import MainCloudSection from '../sections/MainCloudSection';
 
@@ -24,11 +30,11 @@ const SAMPLE_ASPIRATIONS = [
 const HelpSection = (): JSX.Element => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <InfoIcon sx={{ marginRight: 2 }} />
+      <AutoFixNormal sx={{ marginRight: 2 }} />
       <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
-        열망은 명확할수록 좋아요
-        <br />
-        생각에 충분한 시간을 쓰셔도 좋고, 일단 쓰고 나중에 바꿔도 됩니다
+        당신에게 요술봉이 있고, 이 요술봉을 흔들어서 열망/결과가 이루기 위한
+        행동을 말하면 그대로 이루어진다고 생각해보세요. 어떤 행동을 소원으로
+        빌어볼까요?
       </Typography>
     </Box>
   );
@@ -45,7 +51,24 @@ const TitleSection = (): JSX.Element => {
 };
 
 const ActionsFormSection = (): JSX.Element => {
-  const { register } = useFormContext<Pick<GoldenActionInputs, 'actions'>>();
+  const { register, control, setValue, getValues } =
+    useFormContext<GoldenActionInputs>();
+  const { fields, append } = useFieldArray({ control, name: 'actions' });
+
+  const onAddAction = useCallback(() => {
+    if (_.size(getValues('actions')) >= 10) {
+      // TODO : 피드백
+      return;
+    }
+
+    append({
+      name: getValues('actionTextInput'),
+      isEasy: false,
+      isEffective: false,
+    });
+
+    setValue('actionTextInput', '');
+  }, []);
 
   return (
     <Box>
@@ -59,10 +82,11 @@ const ActionsFormSection = (): JSX.Element => {
           <TextField
             label="열망/결과를 이루기 위해서 어떤 행동을 해야 할까요?"
             fullWidth
+            {...register('actionTextInput')}
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
-          <Button fullWidth variant="contained">
+          <Button fullWidth variant="contained" onClick={onAddAction}>
             확인
           </Button>
         </Grid>

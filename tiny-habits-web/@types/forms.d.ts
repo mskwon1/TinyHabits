@@ -7,4 +7,5 @@ type ActionInput = {
 type GoldenActionInputs = {
   aspiration: string;
   actions: ActionInput[];
+  actionTextInput: string;
 };
