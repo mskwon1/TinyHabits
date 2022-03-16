@@ -20,13 +20,6 @@ import {
 import { useCallback } from 'react';
 import MainCloudSection from '../sections/MainCloudSection';
 
-const SAMPLE_ASPIRATIONS = [
-  '숙면',
-  '체중 감량',
-  '스트레스 줄이기',
-  '휴대전화 사용 줄이기',
-];
-
 const HelpSection = (): JSX.Element => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
@@ -82,6 +75,11 @@ const ActionsFormSection = (): JSX.Element => {
           <TextField
             label="열망/결과를 이루기 위해서 어떤 행동을 해야 할까요?"
             fullWidth
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                onAddAction();
+              }
+            }}
             {...register('actionTextInput')}
           />
         </Grid>
