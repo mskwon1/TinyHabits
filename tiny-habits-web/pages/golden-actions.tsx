@@ -20,11 +20,10 @@ const GoldenActionsPage = (): JSX.Element => {
     if (!_.isNil(queryStep)) {
       setStep(+queryStep as GOLDEN_ACTION_STEPS);
     } else {
+      setStep(GOLDEN_ACTION_STEPS.ASPIRATION_INPUT);
       router.replace('/golden-actions');
     }
   }, [queryStep]);
-
-  console.log(step);
 
   const handlers = useForm<GoldenActionInputs>({
     mode: 'onChange',
