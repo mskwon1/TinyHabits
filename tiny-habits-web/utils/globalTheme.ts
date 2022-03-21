@@ -2,6 +2,22 @@ import { createTheme, Theme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   type DefaultTheme = Theme;
+
+  interface Palette {
+    dark: Palette['primary'];
+    light: Palette['primary'];
+  }
+  interface PaletteOptions {
+    dark: PaletteOptions['primary'];
+    light: PaletteOptions['primary'];
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    dark: true;
+    light: true;
+  }
 }
 
 export const theme = createTheme({
@@ -19,6 +35,14 @@ export const theme = createTheme({
       light: '#9c786c',
       dark: '#40241a',
     },
+    dark: {
+      main: '#000000',
+      contrastText: '#ffffff',
+    },
+    light: {
+      main: '#ffffff',
+      contrastText: '#000000',
+    },
   },
-  spacing: (factor) => `${0.25 * factor}rem`,
+  spacing: (factor: number) => `${0.25 * factor}rem`,
 });
