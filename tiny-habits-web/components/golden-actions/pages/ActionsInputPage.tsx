@@ -1,24 +1,13 @@
-import {
-  Chip,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Grid, TextField, Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
-import InfoIcon from '@mui/icons-material/Info';
 import React from 'react';
 import _ from 'lodash';
 import AutoFixNormal from '@mui/icons-material/AutoFixNormal';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
-import MainCloudSection from '../sections/MainCloudSection';
+import ActionButton from '@components/buttons/ActionButton';
+import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
+import DeleteCircleButton from '@components/buttons/DeleteCircleButton';
 
 const HelpSection = (): JSX.Element => {
   return (
@@ -87,6 +76,77 @@ const ActionsFormSection = (): JSX.Element => {
           <Button fullWidth variant="contained" onClick={onAddAction}>
             확인
           </Button>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+const MainCloudSection = (): JSX.Element => {
+  const { watch, control } = useFormContext<GoldenActionInputs>();
+
+  const { remove } = useFieldArray<GoldenActionInputs>({
+    name: 'actions',
+  });
+
+  const currentActions = watch('actions');
+
+  return (
+    <Box
+      flexGrow={1}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          lg={4}
+          display="flex"
+          flexDirection="column"
+          rowGap={2}
+          justifyContent="start"
+          alignItems="center"
+          paddingX={4}
+        >
+          {_.size(currentActions) > 0 &&
+            _.map(_.slice(currentActions, 0, 5), (action, index) => {
+              return (
+                <ActionButton
+                  name={action.name}
+                  leftSection={
+                    <DeleteCircleButton onClick={() => remove(index)} />
+                  }
+                />
+              );
+            })}
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <CloudBackgroundLabel label={watch('aspiration')} />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={4}
+          display="flex"
+          flexDirection="column"
+          rowGap={2}
+          justifyContent="start"
+          alignItems="center"
+          paddingX={4}
+        >
+          {_.size(currentActions) > 0 &&
+            _.map(_.slice(currentActions, 5), (action, index) => {
+              return (
+                <ActionButton
+                  name={action.name}
+                  rightSection={
+                    <DeleteCircleButton onClick={() => remove(index + 5)} />
+                  }
+                />
+              );
+            })}
         </Grid>
       </Grid>
     </Box>

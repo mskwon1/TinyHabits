@@ -10,11 +10,11 @@ import { Box } from '@mui/system';
 import InfoIcon from '@mui/icons-material/Info';
 import React from 'react';
 import _ from 'lodash';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { GOLDEN_ACTION_STEPS } from '@constants';
-import MainCloudSection from '../sections/MainCloudSection';
+import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
 
 const SAMPLE_ASPIRATIONS = [
   '숙면',
@@ -130,6 +130,21 @@ const AspirationFormSection = (): JSX.Element => {
   );
 };
 
+const AspirationLabelSection = (): JSX.Element => {
+  const { watch } = useFormContext<GoldenActionInputs>();
+
+  return (
+    <Box
+      flexGrow={1}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <CloudBackgroundLabel label={watch('aspiration')} />
+    </Box>
+  );
+};
+
 const AspirationInputPage = (): JSX.Element => {
   return (
     <>
@@ -141,7 +156,7 @@ const AspirationInputPage = (): JSX.Element => {
         rowGap={4}
       >
         <TitleSection />
-        <MainCloudSection />
+        <AspirationLabelSection />
         <ExampleStackSection />
         <AspirationFormSection />
         <HelpSection />
