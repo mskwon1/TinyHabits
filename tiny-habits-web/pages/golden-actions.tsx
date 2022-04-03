@@ -34,7 +34,7 @@ const GoldenActionsPage = (): JSX.Element => {
     },
   });
 
-  let innerPage: JSX.Element;
+  let innerPage: JSX.Element | null = null;
 
   if (step === GOLDEN_ACTION_STEPS.ASPIRATION_INPUT) {
     innerPage = <AspirationInputPage />;
@@ -42,6 +42,18 @@ const GoldenActionsPage = (): JSX.Element => {
 
   if (step === GOLDEN_ACTION_STEPS.ACTIONS_INPUT) {
     innerPage = <ActionsInputPage />;
+  }
+
+  if (step === GOLDEN_ACTION_STEPS.SELECT_EFFECTIVE) {
+    innerPage = null;
+  }
+
+  if (step === GOLDEN_ACTION_STEPS.SELECT_REALISTIC) {
+    innerPage == null;
+  }
+
+  if (step === GOLDEN_ACTION_STEPS.RESULT_AND_SAVE) {
+    innerPage = null;
   }
 
   return <FormProvider {...handlers}>{innerPage}</FormProvider>;
