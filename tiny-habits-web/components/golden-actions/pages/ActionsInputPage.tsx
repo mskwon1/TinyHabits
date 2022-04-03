@@ -8,6 +8,8 @@ import { useCallback } from 'react';
 import ActionButton from '@components/buttons/ActionButton';
 import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
 import DeleteCircleButton from '@components/buttons/DeleteCircleButton';
+import { GOLDEN_ACTION_STEPS } from '@constants';
+import { useRouter } from 'next/router';
 
 const HelpSection = (): JSX.Element => {
   return (
@@ -36,6 +38,7 @@ const ActionsFormSection = (): JSX.Element => {
   const { register, control, setValue, getValues } =
     useFormContext<GoldenActionInputs>();
   const { fields, append } = useFieldArray({ control, name: 'actions' });
+  const router = useRouter();
 
   const onAddAction = useCallback(() => {
     if (_.size(getValues('actions')) >= 10) {
@@ -51,6 +54,17 @@ const ActionsFormSection = (): JSX.Element => {
 
     setValue('actionTextInput', '');
   }, []);
+
+  const onConfirm = useCallback(() => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, step: GOLDEN_ACTION_STEPS.SELECT_EFFECTIVE },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, [router]);
 
   return (
     <Box>
@@ -73,8 +87,8 @@ const ActionsFormSection = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12} md={1} px={{ xs: 0, md: 2 }}>
-          <Button fullWidth variant="contained" onClick={onAddAction}>
-            확인
+          <Button fullWidth variant="contained" onClick={onConfirm}>
+            다음
           </Button>
         </Grid>
       </Grid>
