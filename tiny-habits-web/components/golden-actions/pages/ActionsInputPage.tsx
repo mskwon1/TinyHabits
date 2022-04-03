@@ -82,6 +82,24 @@ const ActionsFormSection = (): JSX.Element => {
   );
 };
 
+const ActionsWrapper: React.FC = ({ children }) => {
+  return (
+    <Grid
+      item
+      xs={12}
+      lg={4}
+      display="flex"
+      flexDirection="column"
+      rowGap={2}
+      justifyContent="start"
+      alignItems="center"
+      paddingX={4}
+    >
+      {children}
+    </Grid>
+  );
+};
+
 const MainCloudSection = (): JSX.Element => {
   const { watch, control } = useFormContext<GoldenActionInputs>();
 
@@ -99,17 +117,7 @@ const MainCloudSection = (): JSX.Element => {
       alignItems="center"
     >
       <Grid container>
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          display="flex"
-          flexDirection="column"
-          rowGap={2}
-          justifyContent="start"
-          alignItems="center"
-          paddingX={4}
-        >
+        <ActionsWrapper>
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 0, 5), (action, index) => {
               return (
@@ -121,21 +129,11 @@ const MainCloudSection = (): JSX.Element => {
                 />
               );
             })}
-        </Grid>
+        </ActionsWrapper>
         <Grid item xs={12} lg={4}>
           <CloudBackgroundLabel label={watch('aspiration')} />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          display="flex"
-          flexDirection="column"
-          rowGap={2}
-          justifyContent="start"
-          alignItems="center"
-          paddingX={4}
-        >
+        <ActionsWrapper>
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 5), (action, index) => {
               return (
@@ -147,7 +145,7 @@ const MainCloudSection = (): JSX.Element => {
                 />
               );
             })}
-        </Grid>
+        </ActionsWrapper>
       </Grid>
     </Box>
   );

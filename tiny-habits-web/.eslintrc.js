@@ -12,5 +12,6 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/no-unescaped-entities': 'off',
     'react/jsx-closing-bracket-location': [1, 'line-aligned'],
+    'react/prop-types': 'off',
   },
 };
