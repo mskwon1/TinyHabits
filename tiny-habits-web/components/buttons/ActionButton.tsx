@@ -9,7 +9,7 @@ const ActionButton = (props: {
   const { name, onClick, leftSection, rightSection } = props;
 
   return (
-    <Box display="flex" width="100%" columnGap={2}>
+    <Box display="flex" width="100%" alignItems="center" columnGap={2}>
       {leftSection}
       <Button
         variant="contained"
