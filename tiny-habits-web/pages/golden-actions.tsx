@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import ActionsInputPage from '@components/golden-actions/pages/ActionsInputPage';
 import { GOLDEN_ACTION_STEPS } from '@constants';
 import _ from 'lodash';
+import SelectEffectivePage from '@components/golden-actions/pages/SelectEffectivePage';
 
 const GoldenActionsPage = (): JSX.Element => {
   const router = useRouter();
@@ -45,7 +46,7 @@ const GoldenActionsPage = (): JSX.Element => {
   }
 
   if (step === GOLDEN_ACTION_STEPS.SELECT_EFFECTIVE) {
-    innerPage = null;
+    innerPage = <SelectEffectivePage />;
   }
 
   if (step === GOLDEN_ACTION_STEPS.SELECT_REALISTIC) {
