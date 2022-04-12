@@ -135,12 +135,16 @@ const MainCloudSection = (): JSX.Element => {
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 0, 5), (action, index) => {
               return (
-                <ActionButton
-                  name={action.name}
-                  leftSection={
-                    <DeleteCircleButton onClick={() => remove(index)} />
-                  }
-                />
+                <Box
+                  display="flex"
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="end"
+                  columnGap={2}
+                >
+                  <DeleteCircleButton onClick={() => remove(index)} />
+                  <ActionButton name={action.name} />
+                </Box>
               );
             })}
         </ActionsWrapper>
@@ -151,12 +155,16 @@ const MainCloudSection = (): JSX.Element => {
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 5), (action, index) => {
               return (
-                <ActionButton
-                  name={action.name}
-                  rightSection={
-                    <DeleteCircleButton onClick={() => remove(index + 5)} />
-                  }
-                />
+                <Box
+                  display="flex"
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="start"
+                  columnGap={2}
+                >
+                  <ActionButton name={action.name} />
+                  <DeleteCircleButton onClick={() => remove(index + 5)} />
+                </Box>
               );
             })}
         </ActionsWrapper>

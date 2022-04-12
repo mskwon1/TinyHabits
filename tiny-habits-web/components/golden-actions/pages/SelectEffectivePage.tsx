@@ -44,7 +44,7 @@ const ActionsWrapper: React.FC = ({ children }) => {
       display="flex"
       flexDirection="column"
       rowGap={2}
-      justifyContent="start"
+      justifyContent="end"
       alignItems="center"
       paddingX={4}
     >
@@ -75,20 +75,26 @@ const MainCloudSection = (): JSX.Element => {
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 0, 5), (action, index) => {
               return (
-                <ActionButton
-                  name={action.name}
-                  leftSection={
-                    fields[index].isEffective ? (
-                      <StarIcon width={24} sx={{ color: 'gold' }} />
-                    ) : undefined
-                  }
-                  onClick={() =>
-                    update(index, {
-                      ...fields[index],
-                      isEffective: !fields[index].isEffective,
-                    })
-                  }
-                />
+                <Box
+                  display="flex"
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="end"
+                  columnGap={2}
+                >
+                  {fields[index].isEffective && (
+                    <StarIcon width={24} sx={{ color: 'gold' }} />
+                  )}
+                  <ActionButton
+                    name={action.name}
+                    onClick={() =>
+                      update(index, {
+                        ...fields[index],
+                        isEffective: !fields[index].isEffective,
+                      })
+                    }
+                  />
+                </Box>
               );
             })}
         </ActionsWrapper>
@@ -99,20 +105,26 @@ const MainCloudSection = (): JSX.Element => {
           {_.size(currentActions) > 0 &&
             _.map(_.slice(currentActions, 5), (action, index) => {
               return (
-                <ActionButton
-                  name={action.name}
-                  rightSection={
-                    fields[index + 5].isEffective ? (
-                      <StarIcon width={24} sx={{ color: 'gold' }} />
-                    ) : undefined
-                  }
-                  onClick={() =>
-                    update(index + 5, {
-                      ...fields[index + 5],
-                      isEffective: !fields[index + 5].isEffective,
-                    })
-                  }
-                />
+                <Box
+                  display="flex"
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="start"
+                  columnGap={2}
+                >
+                  <ActionButton
+                    name={action.name}
+                    onClick={() =>
+                      update(index + 5, {
+                        ...fields[index + 5],
+                        isEffective: !fields[index + 5].isEffective,
+                      })
+                    }
+                  />
+                  {fields[index + 5].isEffective && (
+                    <StarIcon width={24} sx={{ color: 'gold' }} />
+                  )}
+                </Box>
               );
             })}
         </ActionsWrapper>
