@@ -7,20 +7,44 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import ActionButton from '@components/buttons/ActionButton';
 import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
-import DeleteCircleButton from '@components/buttons/DeleteCircleButton';
-import { GOLDEN_ACTION_STEPS } from '@constants';
 import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
+import { GOLDEN_ACTION_STEPS } from '@constants';
+
+const ConfirmButtonSection = (): JSX.Element => {
+  const router = useRouter();
+
+  const onConfirm = useCallback(() => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, step: GOLDEN_ACTION_STEPS.SELECT_REALISTIC },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, [router]);
+
+  return (
+    <Box display="flex" justifyContent="end">
+      <Button variant="contained" onClick={onConfirm}>
+        다음
+      </Button>
+    </Box>
+  );
+};
 
 const HelpSection = (): JSX.Element => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <StarIcon sx={{ marginRight: 2 }} />
-      <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
-        열망/결과 달성에 매우 효과가 있으리라고 생각되는 행동 4~5개를
-        클릭해주세요. 행동의 실행 가능성, 또는 현실성은 고려하지 않으셔도
-        됩니다!
-      </Typography>
+      <Box display="flex" alignItems="center" columnGap={2}>
+        <StarIcon sx={{ display: 'inline-block' }} />
+        <Typography variant="body1" sx={{ flexGrow: 1 }}>
+          열망/결과 달성에 매우 효과가 있으리라고 생각되는 행동 4~5개를
+          클릭해주세요. 행동의 실행 가능성, 또는 현실성은 고려하지 않으셔도
+          됩니다!
+        </Typography>
+      </Box>
     </Box>
   );
 };
@@ -44,7 +68,7 @@ const ActionsWrapper: React.FC = ({ children }) => {
       display="flex"
       flexDirection="column"
       rowGap={2}
-      justifyContent="end"
+      justifyContent="start"
       alignItems="center"
       paddingX={4}
     >
@@ -61,7 +85,6 @@ const MainCloudSection = (): JSX.Element => {
   });
 
   const currentActions = watch('actions');
-  console.log(fields);
 
   return (
     <Box
@@ -145,6 +168,7 @@ const SelectEffectivePage = (): JSX.Element => {
       >
         <TitleSection />
         <MainCloudSection />
+        <ConfirmButtonSection />
         <HelpSection />
       </Box>
     </>
