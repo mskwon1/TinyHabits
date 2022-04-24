@@ -12,7 +12,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
 import { CheckCircle, CheckCircleOutline } from '@mui/icons-material';
 
-const ConfirmButtonSection = (): JSX.Element => {
+const HelpSection = (): JSX.Element => {
   const router = useRouter();
 
   const onConfirm = useCallback(() => {
@@ -27,24 +27,17 @@ const ConfirmButtonSection = (): JSX.Element => {
   }, [router]);
 
   return (
-    <Box display="flex" justifyContent="end">
-      <Button variant="contained" onClick={onConfirm}>
-        다음
-      </Button>
-    </Box>
-  );
-};
-
-const HelpSection = (): JSX.Element => {
-  return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <Box display="flex" alignItems="center" columnGap={2}>
+      <Box display="flex" alignItems="center" columnGap={2} mr={10}>
         <StarIcon sx={{ display: 'inline-block' }} />
         <Typography variant="body1" sx={{ flexGrow: 1 }}>
           실행 가능성이 높은 행동을 클릭해주세요. 어떻게 판단해야할지
           모르겠다면, “나는 이 행동을 하고싶은가”라고 자신에게 물어보세요!
         </Typography>
       </Box>
+      <Button variant="contained" onClick={onConfirm}>
+        다음
+      </Button>
     </Box>
   );
 };
@@ -175,7 +168,6 @@ const SelectRealisticPage = (): JSX.Element => {
       >
         <TitleSection />
         <MainCloudSection />
-        <ConfirmButtonSection />
         <HelpSection />
       </Box>
     </>
