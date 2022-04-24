@@ -46,8 +46,14 @@ const ActionsFormSection = (): JSX.Element => {
       return;
     }
 
+    const inputText = getValues('actionTextInput');
+
+    if (_.isEmpty(inputText)) {
+      return;
+    }
+
     append({
-      name: getValues('actionTextInput'),
+      name: inputText,
       isEasy: false,
       isEffective: false,
     });
