@@ -8,6 +8,7 @@ import { GOLDEN_ACTION_STEPS } from '@constants';
 import _ from 'lodash';
 import SelectEffectivePage from '@components/golden-actions/pages/SelectEffectivePage';
 import SelectRealisticPage from '@components/golden-actions/pages/SelectRealisticPage';
+import ResultPage from '@components/golden-actions/pages/ResultPage';
 
 const GoldenActionsPage = (): JSX.Element => {
   const router = useRouter();
@@ -55,7 +56,7 @@ const GoldenActionsPage = (): JSX.Element => {
   }
 
   if (step === GOLDEN_ACTION_STEPS.RESULT_AND_SAVE) {
-    innerPage = null;
+    innerPage = <ResultPage />;
   }
 
   return <FormProvider {...handlers}>{innerPage}</FormProvider>;
