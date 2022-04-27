@@ -9,6 +9,7 @@ import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
 import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
+import HelpAndActionSection from '../sections/HelpAndActionSection';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
@@ -25,19 +26,11 @@ const HelpSection = (): JSX.Element => {
   }, [router]);
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <Box display="flex" alignItems="center" columnGap={2} mr={10}>
-        <StarIcon sx={{ display: 'inline-block' }} />
-        <Typography variant="body1" sx={{ flexGrow: 1 }}>
-          열망/결과 달성에 매우 효과가 있으리라고 생각되는 행동 4~5개를
-          클릭해주세요. 행동의 실행 가능성, 또는 현실성은 고려하지 않으셔도
-          됩니다!
-        </Typography>
-      </Box>
-      <Button variant="contained" onClick={onConfirm}>
-        다음
-      </Button>
-    </Box>
+    <HelpAndActionSection
+      actionText="다음"
+      onActionClick={onConfirm}
+      helpText="열망/결과 달성에 매우 효과가 있으리라고 생각되는 행동 4~5개를 클릭해주세요. 행동의 실행 가능성, 또는 현실성은 고려하지 않으셔도 됩니다!"
+    />
   );
 };
 

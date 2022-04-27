@@ -1,20 +1,18 @@
-import { Grid, TextField, Typography, Button } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import _ from 'lodash';
-import AutoFixNormal from '@mui/icons-material/AutoFixNormal';
-import { SubmitHandler, useFieldArray, useFormContext } from 'react-hook-form';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import ActionButton from '@components/buttons/ActionButton';
 import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
 import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
-import { GOLDEN_ACTION_STEPS } from '@constants';
-import { CheckCircle, CheckCircleOutline } from '@mui/icons-material';
-import AllInboxIcon from '@mui/icons-material/AllInbox';
+import { CheckCircleOutline } from '@mui/icons-material';
 import { createAspiration } from '@api/aspiration';
 import { createAction } from '@api/action';
 import { useSession } from 'next-auth/react';
+import HelpAndActionSection from '../sections/HelpAndActionSection';
 
 const HelpSection = (): JSX.Element => {
   const { watch, handleSubmit } = useFormContext<GoldenActionInputs>();
@@ -62,18 +60,13 @@ const HelpSection = (): JSX.Element => {
   );
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <Box display="flex" alignItems="center" columnGap={2} mr={10}>
-        <AllInboxIcon sx={{ display: 'inline-block' }} />
-        <Typography variant="body1" sx={{ flexGrow: 1 }}>
-          {watch('aspiration')}을(를) 위한 황금행동들을 찾았어요! 이제 이
-          행동들을 어떻게 일상생활에 끼워넣을지 생각해볼까요?
-        </Typography>
-      </Box>
-      <Button variant="contained" onClick={handleSubmit(onConfirm)}>
-        확인
-      </Button>
-    </Box>
+    <HelpAndActionSection
+      actionText="확인"
+      onActionClick={handleSubmit(onConfirm)}
+      helpText={`${watch(
+        'aspiration'
+      )}을(를) 위한 황금행동들을 찾았어요! 이제 이 행동들을 어떻게 일상생활에 끼워넣을지 생각해볼까요?`}
+    />
   );
 };
 
@@ -106,11 +99,7 @@ const ActionsWrapper: React.FC = ({ children }) => {
 };
 
 const MainCloudSection = (): JSX.Element => {
-  const { watch, control } = useFormContext<GoldenActionInputs>();
-
-  const { remove, update, fields } = useFieldArray<GoldenActionInputs>({
-    name: 'actions',
-  });
+  const { watch } = useFormContext<GoldenActionInputs>();
 
   const currentActions = watch('actions');
   const selectedActions = _.filter(currentActions, (action) => {
