@@ -1,8 +1,7 @@
-import { Grid, TextField, Typography, Button } from '@mui/material';
+import { Grid, Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import _ from 'lodash';
-import AutoFixNormal from '@mui/icons-material/AutoFixNormal';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import ActionButton from '@components/buttons/ActionButton';
@@ -10,7 +9,7 @@ import CloudBackgroundLabel from '@components/CloudBackgroundLabel';
 import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
-import { CheckCircle, CheckCircleOutline } from '@mui/icons-material';
+import { CheckCircleOutline } from '@mui/icons-material';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
@@ -29,7 +28,7 @@ const HelpSection = (): JSX.Element => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
       <Box display="flex" alignItems="center" columnGap={2} mr={10}>
-        <StarIcon sx={{ display: 'inline-block' }} />
+        <CheckCircleOutline sx={{ display: 'inline-block' }} />
         <Typography variant="body1" sx={{ flexGrow: 1 }}>
           실행 가능성이 높은 행동을 클릭해주세요. 어떻게 판단해야할지
           모르겠다면, “나는 이 행동을 하고싶은가”라고 자신에게 물어보세요!

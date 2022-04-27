@@ -1,8 +1,7 @@
-import { Grid, TextField, Typography, Button } from '@mui/material';
+import { Grid, Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import _ from 'lodash';
-import AutoFixNormal from '@mui/icons-material/AutoFixNormal';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useCallback } from 'react';
 import ActionButton from '@components/buttons/ActionButton';
@@ -11,7 +10,7 @@ import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
 
-const ConfirmButtonSection = (): JSX.Element => {
+const HelpSection = (): JSX.Element => {
   const router = useRouter();
 
   const onConfirm = useCallback(() => {
@@ -26,18 +25,8 @@ const ConfirmButtonSection = (): JSX.Element => {
   }, [router]);
 
   return (
-    <Box display="flex" justifyContent="end">
-      <Button variant="contained" onClick={onConfirm}>
-        다음
-      </Button>
-    </Box>
-  );
-};
-
-const HelpSection = (): JSX.Element => {
-  return (
     <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-      <Box display="flex" alignItems="center" columnGap={2}>
+      <Box display="flex" alignItems="center" columnGap={2} mr={10}>
         <StarIcon sx={{ display: 'inline-block' }} />
         <Typography variant="body1" sx={{ flexGrow: 1 }}>
           열망/결과 달성에 매우 효과가 있으리라고 생각되는 행동 4~5개를
@@ -45,6 +34,9 @@ const HelpSection = (): JSX.Element => {
           됩니다!
         </Typography>
       </Box>
+      <Button variant="contained" onClick={onConfirm}>
+        다음
+      </Button>
     </Box>
   );
 };
@@ -168,7 +160,6 @@ const SelectEffectivePage = (): JSX.Element => {
       >
         <TitleSection />
         <MainCloudSection />
-        <ConfirmButtonSection />
         <HelpSection />
       </Box>
     </>
