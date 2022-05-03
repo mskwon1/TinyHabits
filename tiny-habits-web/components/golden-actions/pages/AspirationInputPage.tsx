@@ -47,7 +47,24 @@ const TitleSection = (): JSX.Element => {
 };
 
 const ExampleStackSection = (): JSX.Element => {
-  const { setValue, setFocus } = useFormContext<{ aspiration: string }>();
+  const router = useRouter();
+  const { setValue } = useFormContext<{ aspiration: string }>();
+
+  const onClick = useCallback(
+    (aspiration: string) => {
+      setValue('aspiration', aspiration);
+
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, step: GOLDEN_ACTION_STEPS.ACTIONS_INPUT },
+        },
+        undefined,
+        { shallow: true }
+      );
+    },
+    [router]
+  );
 
   return (
     <Box>
@@ -59,10 +76,7 @@ const ExampleStackSection = (): JSX.Element => {
               label={aspiration}
               color="primary"
               sx={{ cursor: 'pointer' }}
-              onClick={() => {
-                setValue('aspiration', aspiration);
-                setFocus('aspiration');
-              }}
+              onClick={() => onClick(aspiration)}
             />
           );
         })}
