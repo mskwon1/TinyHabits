@@ -35,9 +35,15 @@ const TitleSection = (): JSX.Element => {
 };
 
 const ActionsFormSection = (): JSX.Element => {
-  const { register, control, setValue, getValues } =
-    useFormContext<GoldenActionInputs>();
-  const { fields, append } = useFieldArray({ control, name: 'actions' });
+  const {
+    register,
+    control,
+    setValue,
+    getValues,
+    setError,
+    formState: { errors },
+  } = useFormContext<GoldenActionInputs>();
+  const { append } = useFieldArray({ control, name: 'actions' });
   const router = useRouter();
 
   const onAddAction = useCallback(() => {
@@ -62,6 +68,17 @@ const ActionsFormSection = (): JSX.Element => {
   }, []);
 
   const onConfirm = useCallback(() => {
+    const actionsCount = _.size(getValues('actions'));
+    const isValid = actionsCount >= 5;
+
+    if (!isValid) {
+      setError('actionTextInput', {
+        message: '행동을 최소 5개 입력해주세요! 천천히 생각해도 좋습니다',
+      });
+
+      return;
+    }
+
     router.push(
       {
         pathname: router.pathname,
@@ -89,6 +106,8 @@ const ActionsFormSection = (): JSX.Element => {
                 onAddAction();
               }
             }}
+            error={!!errors.actionTextInput}
+            helperText={errors.actionTextInput?.message}
             {...register('actionTextInput')}
           />
         </Grid>
@@ -121,7 +140,7 @@ const ActionsWrapper: React.FC = ({ children }) => {
 };
 
 const MainCloudSection = (): JSX.Element => {
-  const { watch, control } = useFormContext<GoldenActionInputs>();
+  const { watch } = useFormContext<GoldenActionInputs>();
 
   const { remove } = useFieldArray<GoldenActionInputs>({
     name: 'actions',
