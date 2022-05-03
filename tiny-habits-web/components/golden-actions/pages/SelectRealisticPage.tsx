@@ -14,8 +14,18 @@ import HelpAndActionSection from '../sections/HelpAndActionSection';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
+  const { getValues } = useFormContext<GoldenActionInputs>();
 
   const onConfirm = useCallback(() => {
+    const currentActions = getValues('actions');
+    const easyActions = _.filter(currentActions, 'isEasy');
+
+    if (_.isEmpty(easyActions)) {
+      // TODO : FEEDBACK
+
+      return;
+    }
+
     router.push(
       {
         pathname: router.pathname,
@@ -64,9 +74,9 @@ const ActionsWrapper: React.FC = ({ children }) => {
 };
 
 const MainCloudSection = (): JSX.Element => {
-  const { watch, control } = useFormContext<GoldenActionInputs>();
+  const { watch } = useFormContext<GoldenActionInputs>();
 
-  const { remove, update, fields } = useFieldArray<GoldenActionInputs>({
+  const { update, fields } = useFieldArray<GoldenActionInputs>({
     name: 'actions',
   });
 

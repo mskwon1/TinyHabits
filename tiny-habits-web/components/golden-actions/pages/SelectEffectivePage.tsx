@@ -13,8 +13,18 @@ import HelpAndActionSection from '../sections/HelpAndActionSection';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
+  const { getValues } = useFormContext<GoldenActionInputs>();
 
   const onConfirm = useCallback(() => {
+    const currentActions = getValues('actions');
+    const effectiveActions = _.filter(currentActions, 'isEffective');
+
+    if (_.isEmpty(effectiveActions)) {
+      // TODO : FEEDBACK
+
+      return;
+    }
+
     router.push(
       {
         pathname: router.pathname,
@@ -88,7 +98,7 @@ const MainCloudSection = (): JSX.Element => {
                   width="100%"
                   alignItems="center"
                   justifyContent="end"
-                  columnGap={2}
+                  columnGap={1}
                 >
                   {fields[index].isEffective && (
                     <StarIcon width={24} sx={{ color: 'gold' }} />
@@ -118,7 +128,7 @@ const MainCloudSection = (): JSX.Element => {
                   width="100%"
                   alignItems="center"
                   justifyContent="start"
-                  columnGap={2}
+                  columnGap={1}
                 >
                   <ActionButton
                     name={action.name}

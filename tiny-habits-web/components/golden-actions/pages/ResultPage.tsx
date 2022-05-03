@@ -122,7 +122,7 @@ const MainCloudSection = (): JSX.Element => {
                 display="flex"
                 width="100%"
                 alignItems="center"
-                justifyContent="start"
+                justifyContent="end"
                 columnGap={1}
               >
                 <CheckCircleOutline width={24} sx={{ color: 'green' }} />
