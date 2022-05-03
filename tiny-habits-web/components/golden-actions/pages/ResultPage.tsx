@@ -13,6 +13,7 @@ import { createAspiration } from '@api/aspiration';
 import { createAction } from '@api/action';
 import { useSession } from 'next-auth/react';
 import HelpAndActionSection from '../sections/HelpAndActionSection';
+import { GOLDEN_ACTION_STEPS } from '@constants';
 
 const HelpSection = (): JSX.Element => {
   const { watch, handleSubmit } = useFormContext<GoldenActionInputs>();
@@ -59,13 +60,34 @@ const HelpSection = (): JSX.Element => {
     [router, session]
   );
 
+  const onRetry = useCallback(() => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, step: GOLDEN_ACTION_STEPS.ACTIONS_INPUT },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, [router]);
+
+  const currentAspiration = watch('aspiration');
+  const currentActions = watch('actions');
+  const selectedActions = _.filter(currentActions, (action) => {
+    return action.isEasy && action.isEffective;
+  });
+
+  const shouldRetry = _.size(selectedActions) < 1;
+
   return (
     <HelpAndActionSection
       actionText="확인"
-      onActionClick={handleSubmit(onConfirm)}
-      helpText={`${watch(
-        'aspiration'
-      )}을(를) 위한 황금행동들을 찾았어요! 이제 이 행동들을 어떻게 일상생활에 끼워넣을지 생각해볼까요?`}
+      onActionClick={shouldRetry ? onRetry : handleSubmit(onConfirm)}
+      helpText={
+        shouldRetry
+          ? `${currentAspiration}을(를) 위한 황금행동을 찾지 못했어요 😭.. 다시 해볼까요?`
+          : `${currentAspiration}을(를) 위한 황금행동들을 찾았어요! 이제 이 행동들을 어떻게 일상생활에 끼워넣을지 생각해볼까요?`
+      }
     />
   );
 };
