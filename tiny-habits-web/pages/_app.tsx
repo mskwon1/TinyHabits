@@ -6,6 +6,7 @@ import Header from '../components/layout/Header';
 import { NavigationBar } from '../components/layout/NavigationBar';
 import { SessionProvider } from 'next-auth/react';
 import { Box, CssBaseline } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const { session, ...restPageProps } = pageProps;
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <Header />
         <NavigationBar />
         <Component {...restPageProps} />
+        <Toaster />
       </ThemeProvider>
     </SessionProvider>
   );
