@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
 import HelpAndActionSection from '../sections/HelpAndActionSection';
+import { showErrorToast } from 'helpers/toast.helpers';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const HelpSection = (): JSX.Element => {
     const effectiveActions = _.filter(currentActions, 'isEffective');
 
     if (_.isEmpty(effectiveActions)) {
-      // TODO : FEEDBACK
+      showErrorToast('최소 하나의 효과적인 행동을 선택해주세요');
 
       return;
     }

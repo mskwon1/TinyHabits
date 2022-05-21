@@ -11,6 +11,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { GOLDEN_ACTION_STEPS } from '@constants';
 import { CheckCircleOutline } from '@mui/icons-material';
 import HelpAndActionSection from '../sections/HelpAndActionSection';
+import { showErrorToast } from 'helpers/toast.helpers';
 
 const HelpSection = (): JSX.Element => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const HelpSection = (): JSX.Element => {
     const easyActions = _.filter(currentActions, 'isEasy');
 
     if (_.isEmpty(easyActions)) {
-      // TODO : FEEDBACK
+      showErrorToast('최소 하나의 실행 가능성 높은 행동을 선택해주세요');
 
       return;
     }
